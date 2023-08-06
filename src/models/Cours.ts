@@ -15,6 +15,20 @@ import db from '../config/db';
 export interface Course {
   id: number;
   name: string;
+  description: string;
+  duration: string;
+  difficulty: string;
+  category: string;
+  prerequisites: string[];
+  learningObjectives: string[];
+  materials: string[];
+  instructor: string;
+  evaluationMethod: string;
+  price: number;
+  availability: string;
+  certificates: boolean;
+  interactive: boolean;
+  language: string;
 }
 
 const TABLE_NAME = 'courses';
