@@ -2,14 +2,15 @@
     * @description      : 
     * @author           : belgacem
     * @group            : 
-    * @created          : 04/08/2023 - 13:42:25
+    * @created          : 06/08/2023 - 21:25:39
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 04/08/2023
+    * - Date            : 06/08/2023
     * - Author          : belgacem
     * - Modification    : 
 **/
+// models/User.ts
 import db from '../config/db';
 
 export interface User {
@@ -18,7 +19,7 @@ export interface User {
   mail: string;
 }
 
-const TABLE_NAME = 'Users';
+const TABLE_NAME = 'users';
 
 export const getAllUsers = async (): Promise<User[]> => {
   try {
@@ -37,19 +38,20 @@ export const getUserById = async (id: number): Promise<User | null> => {
   }
 };
 
-export const createUser = async (User: User): Promise<User> => {
+export const createUser = async (user: User): Promise<User> => {
   try {
-    console.log(db(TABLE_NAME).insert(User).toString());
-    const [createdUser] = await db(TABLE_NAME).insert(User).returning(['id', 'name', 'mail']);
+    const [createdUser] = await db(TABLE_NAME).insert(user).returning(['id', 'name', 'mail']);
     return createdUser;
   } catch (error) {
+    console.error(error);
     throw new Error('Error while creating a new user');
   }
 };
 
-export const updateUserController = async (id: number, User: User): Promise<User | null> => {
+
+export const updateUser = async (id: number, user: User): Promise<User | null> => {
   try {
-    const [updatedUser] = await db(TABLE_NAME).where('id', id).update(User).returning('*');
+    const [updatedUser] = await db(TABLE_NAME).where('id', id).update(user).returning('*');
     return updatedUser || null;
   } catch (error) {
     throw new Error(`Error while updating user with ID ${id}`);
