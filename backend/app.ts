@@ -14,8 +14,11 @@
 import  * as express from 'express';
 import * as  bodyParser from 'body-parser';
 import router from './src/Routes/routes';
+import * as cors from 'cors';
 
 const app = express();
+app.use(cors());
+
 console.log(__dirname);
 console.log(__filename);
 
@@ -31,3 +34,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+

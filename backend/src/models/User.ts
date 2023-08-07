@@ -17,6 +17,10 @@ export interface User {
   id: number;
   name: string;
   mail: string;
+  password : string;
+  niveau_educative :string;
+  
+
 }
 
 const TABLE_NAME = 'users';

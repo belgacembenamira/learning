@@ -29,7 +29,7 @@ router.get("/courses/:id", getCourseByIdController);
 router.post("/courses", createCourseController);
 router.put("/courses/:id", updateCourseController);
 router.delete("/courses/:id", deleteCourseController);
-/*********************user */
+/*********************user ************************************/
 router.get('/users', getAllUsersController);
 router.get('/users/:id', getUserByIdController);
 router.post('/users', createUserController);
