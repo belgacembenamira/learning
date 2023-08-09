@@ -69,3 +69,14 @@ export const deleteUser = async (id: number): Promise<number> => {
     throw new Error(`Error while deleting user with ID ${id}`);
   }
 };
+
+
+export const findUserByEmail = async (email: string): Promise<User | null> => {
+  try {
+    const user = await db('users').where({ mail: email }).first();
+    return user || null;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

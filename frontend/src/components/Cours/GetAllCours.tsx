@@ -1,18 +1,22 @@
+/* eslint-disable react/jsx-no-undef */
 /**
-    * @description      : 
-    * @author           : belgacem
-    * @group            : 
-    * @created          : 07/08/2023 - 10:42:04
-    * 
-    * MODIFICATION LOG
-    * - Version         : 1.0.0
-    * - Date            : 07/08/2023
-    * - Author          : belgacem
-    * - Modification    : 
-**/
+ * @description      :
+ * @author           :
+ * @group            :
+ * @created          : 07/08/2023 - 10:42:04
+ *
+ * MODIFICATION LOG
+ * - Version         : 1.0.0
+ * - Date            : 07/08/2023
+ * - Author          :
+ * - Modification    :
+ **/
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function GetAllCours() {
   const [courses, setCourses] = useState<Course[]>([]);
@@ -53,21 +57,51 @@ export default function GetAllCours() {
 
   const navigate = useNavigate();
 
+ 
   const handleViewCourse = (course: Course) => {
-    alert(`Voir le cours "${course.name}"`);
-  };
 
+    notifySuccess(`Voir le cours "${course.name}"`);
+    console.log(`Voir le cours "${course.name}"`);
+    navigate(`/course-details/${course.id}`);
+  }
+  
   const handleDeleteCourse = (course: Course) => {
-    alert(`Supprimer le cours "${course.name}"`);
+    console.log('Supprimer le cours', course.name); // Ajoutez cette ligne
+    notifyInfo(`Supprimer le cours "${course.name}"`);
+    navigate(`/delete-course/${course.id}`);
   };
-
+  
   const handleEditCourse = (course: Course) => {
-    // Naviguer vers le composant de modification avec l'ID du cours comme paramètre d'URL
+    notifyInfo(`/edit-course/${course.id}`);
     navigate(`/edit-course/${course.id}`);
   };
 
+  const handleCreateCourse = () => {
+    notifyInfo("Create Course")
+    navigate('/create-course');
+  };
+
+  const notifySuccess = (message: string) => {
+    toast.success(message, {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeButton: true,
+    });
+  };
+
+  const notifyInfo = (message: string) => {
+    toast.info(message, {
+      position: toast.POSITION.TOP_LEFT, // Position en haut à gauche
+      autoClose: 5000, // 
+      hideProgressBar: true,
+      closeButton: true,
+    });
+  };
+  
+
   return (
-    <div>
+    <><ToastContainer /><div>
       <h1>Liste des cours</h1>
       <table className="table table-bordered">
         <thead>
@@ -90,19 +124,19 @@ export default function GetAllCours() {
               <td>{course.category}</td>
               <td>
                 <button
-                  className="btn btn-primary mr-2"
+                  className="btn btn-primary mr-2 m-1"
                   onClick={() => handleViewCourse(course)}
                 >
                   Voir
                 </button>
                 <button
-                  className="btn btn-danger mr-2"
+                  className="btn btn-danger mr-2 m-1"
                   onClick={() => handleDeleteCourse(course)}
                 >
                   Supprimer
                 </button>
                 <button
-                  className="btn btn-warning"
+                  className="btn btn-warning m-1"
                   onClick={() => handleEditCourse(course)}
                 >
                   Modifier
@@ -112,6 +146,9 @@ export default function GetAllCours() {
           ))}
         </tbody>
       </table>
-    </div>
+      <button className="btn btn-primary mb-3" onClick={handleCreateCourse}>
+        Créer un cours
+      </button>
+    </div></>
   );
 }

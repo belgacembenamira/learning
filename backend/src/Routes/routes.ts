@@ -18,8 +18,14 @@ import {
   updateCourseController,
   deleteCourseController,
 } from "../controllers/CoursController";
-import { createUserController, deleteUserController, getAllUsersController, getUserByIdController, updateUserController } from "../controllers/UserController";
-
+import {
+  createUserController,
+  deleteUserController,
+  getAllUsersController,
+  getUserByIdController,
+  login,
+  updateUserController,
+} from "../controllers/UserController";
 
 const router = Router();
 /***********************course ****************************** */
@@ -30,10 +36,12 @@ router.post("/courses", createCourseController);
 router.put("/courses/:id", updateCourseController);
 router.delete("/courses/:id", deleteCourseController);
 /*********************user ************************************/
-router.get('/users', getAllUsersController);
-router.get('/users/:id', getUserByIdController);
-router.post('/users', createUserController);
-router.put('/users/:id', updateUserController);
-router.delete('/users/:id', deleteUserController);
+router.get("/users", getAllUsersController);
+router.get("/users/:id", getUserByIdController);
+router.post("/users", createUserController);
+router.put("/users/:id", updateUserController);
+router.delete("/users/:id", deleteUserController);
+/********************AUTH USER********************** */
+router.post("/login", login);
 
 export default router;
