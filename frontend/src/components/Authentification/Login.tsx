@@ -1,33 +1,33 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 /**
     * @description      : 
     * @author           : belgacem
     * @group            : 
-    * @created          : 09/08/2023 - 14:09:23
+    * @created          : 11/08/2023 - 21:09:44
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 09/08/2023
+    * - Date            : 11/08/2023
     * - Author          : belgacem
     * - Modification    : 
 **/
+
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
 import { useLoginMutation } from '../../api';
 import { useNavigate } from 'react-router-dom';
+import { Form, Button } from 'react-bootstrap';
 
 const Login: React.FC = () => {
-  const [mail, setmail] = useState('');
+  const [mail, setMail] = useState('');
   const [password, setPassword] = useState('');
   const [login, { isLoading, isError }] = useLoginMutation();
-  const navigate = useNavigate(); // Add useNavigate hook
+  const navigate = useNavigate(); // Utilisez useNavigate pour la navigation
 
   const handleLogin = async () => {
     try {
       const credentials = { mail, password };
       await login(credentials);
-      
-      // If login is successful, navigate to '/'
+
+      // Si la connexion réussit, naviguez vers la page souhaitée (par exemple, '/')
       navigate('/');
     } catch (error) {
       console.error('Login error:', error);
@@ -35,15 +35,16 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div>
+<div className="w-50 mx-auto mt-5">
       <h2>Login</h2>
       <Form>
         <Form.Group controlId="mail">
           <Form.Label>Email</Form.Label>
           <Form.Control
-            type="email" // Change type to 'email'
+            type="email"
             value={mail}
-            onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setmail(e.target.value)}
+            onChange={(e) => setMail(e.target.value)}
+            placeholder="Enter your email"
           />
         </Form.Group>
         <Form.Group controlId="password">
@@ -51,16 +52,26 @@ const Login: React.FC = () => {
           <Form.Control
             type="password"
             value={password}
-            onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter your password"
           />
         </Form.Group>
-        <Button variant="primary" onClick={handleLogin} disabled={isLoading}>
+        <Button
+          variant="primary"
+          onClick={handleLogin}
+          disabled={isLoading}
+          className="w-100"
+        >
           {isLoading ? 'Logging in...' : 'Login'}
         </Button>
-        {isError && <p className="text-danger">Invalid credentials.</p>}
+        {isError && <p className="text-danger mt-2">Invalid credentials.</p>}
       </Form>
     </div>
+
+
   );
 };
 
 export default Login;
+
+

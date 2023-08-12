@@ -23,6 +23,7 @@ import CreateCourse from './components/Cours/CreateCourse';
 import Login from './components/Authentification/Login';
 import Register from './components/Authentification/Register';
 import store from './api/Store';
+import CardCours from './components/Cours/CardCours';
 
 function App() {
   return (
@@ -31,7 +32,7 @@ function App() {
         <Routes>
           {/* Define your routes */}
           {/* Define a route for the GetAllCours component */}
-          <Route path="/" element={<GetAllCours />} />
+          <Route path="/" element={<CardCours />} />
           <Route path="/courses" element={<GetAllCours />} />
           {/* Define a route for the UpdateCourse component */}
           <Route path="/edit-course/:id" element={<UpdateCourse />} />

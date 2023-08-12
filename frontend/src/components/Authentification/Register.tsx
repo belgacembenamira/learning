@@ -16,31 +16,33 @@ import { useRegisterMutation } from '../../api/index';
 import { useNavigate } from 'react-router-dom';
 
 
+
 const Register: React.FC = () => {
   const [name, setName] = useState('');
-  const [mail, setmail] = useState(''); // Corrected variable name to "mail"
+  const [mail, setMail] = useState('');
   const [password, setPassword] = useState('');
   const [niveauEducative, setNiveauEducative] = useState('');
   const [register, { isLoading, isError }] = useRegisterMutation();
+  const navigte = useNavigate();
 
   const handleRegister = async () => {
     try {
       const credentials = {
         name: name,
-        mail: mail,  
+        mail: mail,
         password: password,
         niveau_educative: niveauEducative,
       };
       await register(credentials);
-    //   alert(`Register successfully'ed ${name}`);
+      // alert(`Register successfully'ed ${name}`);
+      navigte('/login');
     } catch (error) {
       console.error('Registration error:', error);
     }
   };
-  
 
   return (
-    <div>
+    <div className="w-50 mx-auto mt-5">
       <h2>Register</h2>
       <Form>
         <Form.Group controlId="name">
@@ -49,14 +51,16 @@ const Register: React.FC = () => {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            placeholder="Enter your name"
           />
         </Form.Group>
         <Form.Group controlId="mail">
-          <Form.Label>mail</Form.Label>
+          <Form.Label>Email</Form.Label>
           <Form.Control
-            type="mail"
+            type="email"
             value={mail}
-            onChange={(e) => setmail(e.target.value)}
+            onChange={(e) => setMail(e.target.value)}
+            placeholder="Enter your email"
           />
         </Form.Group>
         <Form.Group controlId="password">
@@ -65,6 +69,7 @@ const Register: React.FC = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter your password"
           />
         </Form.Group>
         <Form.Group controlId="niveau_educative">
@@ -73,14 +78,21 @@ const Register: React.FC = () => {
             type="text"
             value={niveauEducative}
             onChange={(e) => setNiveauEducative(e.target.value)}
+            placeholder="Enter your educational level"
           />
         </Form.Group>
-        <Button variant="primary" onClick={handleRegister} disabled={isLoading}>
+        <Button
+          variant="primary"
+          onClick={handleRegister}
+          disabled={isLoading}
+          className="w-100"
+        >
           {isLoading ? 'Registering...' : 'Register'}
         </Button>
-        {isError && <p className="text-danger">Registration failed.</p>}
+        {isError && <p className="text-danger mt-2">Registration failed.</p>}
       </Form>
     </div>
+
   );
 };
 

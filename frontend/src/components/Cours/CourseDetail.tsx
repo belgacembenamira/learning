@@ -2,11 +2,11 @@
     * @description      : 
     * @author           : belgacem
     * @group            : 
-    * @created          : 07/08/2023 - 14:42:18
+    * @created          : 12/08/2023 - 20:32:43
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 07/08/2023
+    * - Date            : 12/08/2023
     * - Author          : belgacem
     * - Modification    : 
 **/
@@ -25,6 +25,7 @@ interface Course {
   availability: string;
   instructor: string;
   language: string;
+  image_url: string; // Add the image_url property
   // Add more properties if needed
 }
 
@@ -57,29 +58,33 @@ const CourseDetail: React.FC = () => {
   }
 
   return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="col-md-8">
-          <h1>{course.name}</h1>
-          <p className="lead">{course.description}</p>
-          <p>Duration: {course.duration}</p>
-          <p>Difficulty: {course.difficulty}</p>
-          <p>Category: {course.category}</p>
-          <p>Price: ${course.price}</p>
-          <p>Availability: {course.availability}</p>
-          {/* Add more course details here as needed */}
-        </div>
-        <div className="col-md-4">
-          <div className="card">
-            <img
-              src="https://via.placeholder.com/300"
-              className="card-img-top"
-              alt={course.name}
-            />
-            <div className="card-body">
-              <h5 className="card-title">Instructor: {course.instructor}</h5>
-              <p className="card-text">Language: {course.language}</p>
-              {/* Add more instructor details or other course-related information */}
+    <div className="bg-light py-5">
+      <div className="container mt-5">
+        <div className="row">
+          <div className="col-md-8">
+            <div className="card p-4">
+              <h1>{course.name}</h1>
+              <p className="lead">{course.description}</p>
+              <p><strong>Duration:</strong> {course.duration}</p>
+              <p><strong>Difficulty:</strong> {course.difficulty}</p>
+              <p><strong>Category:</strong> {course.category}</p>
+              <p><strong>Price:</strong> ${course.price}</p>
+              <p><strong>Availability:</strong> {course.availability}</p>
+              {/* Add more course details here as needed */}
+            </div>
+          </div>
+          <div className="col-md-4">
+            <div className="card">
+              <img
+                src={course.image_url} // Use the image_url from the API
+                className="card-img-top"
+                alt={course.name}
+              />
+              <div className="card-body">
+                <h5 className="card-title"><strong>Instructor:</strong> {course.instructor}</h5>
+                <p className="card-text"><strong>Language:</strong> {course.language}</p>
+                {/* Add more instructor details or other course-related information */}
+              </div>
             </div>
           </div>
         </div>
@@ -88,4 +93,9 @@ const CourseDetail: React.FC = () => {
   );
 };
 
+
+
+
+
 export default CourseDetail;
+

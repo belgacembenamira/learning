@@ -2,61 +2,43 @@
     * @description      : 
     * @author           : belgacem
     * @group            : 
-    * @created          : 07/08/2023 - 14:43:36
+    * @created          : 12/08/2023 - 21:20:41
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 07/08/2023
+    * - Date            : 12/08/2023
     * - Author          : belgacem
     * - Modification    : 
 **/
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { error } from 'console';
 
-interface CreateCourseProps {
-  // Ajoutez les éventuelles propriétés nécessaires ici
-}
-
-interface Course {
-  id?: number;
-  name: string;
-  description: string;
-  duration: string;
-  difficulty: string;
-  category: string;
-  prerequisites: string[];
-  learning_objectives: string[];
-  materials: string[];
-  instructor: string;
-  evaluation_method: string;
-  price: number;
-  availability: string;
-  language: string;
-}
-
-const CreateCourse: React.FC<CreateCourseProps> = () => {
+const CreateCourse: React.FC = () => {
   const navigate = useNavigate();
+
+  interface Course {
+    availability: string | number |  string[] | undefined;
+    instructor: string | number |  string[] | undefined;
+    name: string;
+    description: string;
+    price: number;
+    image_url: string;
+  }
 
   const initialCourseState: Course = {
     name: '',
     description: '',
-    duration: '',
-    difficulty: '',
-    category: '',
-    prerequisites: [],
-    learning_objectives: [],
-    materials: [],
-    instructor: '',
-    evaluation_method: '',
     price: 0,
+    image_url: '',
     availability: '',
-    language: '',
+    instructor: '',
   };
 
   const [course, setCourse] = useState<Course>(initialCourseState);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setCourse((prevCourse) => ({
       ...prevCourse,
@@ -67,43 +49,104 @@ const CreateCourse: React.FC<CreateCourseProps> = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      // Faire la requête API pour ajouter le cours
       const response = await axios.post('http://localhost:5000/courses/', course);
-      // Vérifier que la réponse est valide et que le cours a été créé avec succès
       if (response.status === 201) {
-        // Rediriger vers la liste des cours après l'ajout réussi
         navigate('/');
       } else {
-        // Afficher un message d'erreur si la création a échoué
-        console.error('Erreur lors de l\'ajout du cours :', response.data.message);
+        console.error('Erreur lors de l\'ajout du cours:',);
       }
     } catch (error) {
-      console.error('Erreur lors de l\'ajout du cours :', error);
+      console.error('Erreur lors de l\'ajout du cours:', error);
     }
   };
 
   return (
     <div className="container mt-5">
-      <h1>Ajouter un cours</h1>
-      <form onSubmit={handleSubmit}>
+      <div className="card bg-light p-4">
+        <h1 className="mb-4">Ajouter un cours</h1>
+        <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Nom du cours:
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="name"
-            name="name"
-            value={course.name}
-            onChange={handleChange}
-          />
-        </div>
-        {/* Ajoutez ici d'autres champs de formulaire avec des classes Bootstrap */}
-        <button type="submit" className="btn btn-primary">
-          Ajouter
-        </button>
-      </form>
+            <label htmlFor="name" className="form-label">
+              Nom du cours:
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="name"
+              name="name"
+              value={course.name}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="description" className="form-label">
+              Description:
+            </label>
+            <textarea
+              className="form-control"
+              id="description"
+              name="description"
+              value={course.description}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="image_url" className="form-label">
+              URL de l'image:
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="image_url"
+              name="image_url"
+              value={course.image_url}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="price" className="form-label">
+              Prix:
+            </label>
+            <input
+              type="number"
+              className="form-control"
+              id="price"
+              name="price"
+              value={course.price}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="availability" className="form-label">
+              Disponibilité:
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="availability"
+              name="availability"
+              value={course.availability}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="instructor" className="form-label">
+              Instructeur:
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="instructor"
+              name="instructor"
+              value={course.instructor}
+              onChange={handleChange}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Ajouter
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

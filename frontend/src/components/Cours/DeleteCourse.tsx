@@ -2,17 +2,16 @@
     * @description      : 
     * @author           : belgacem
     * @group            : 
-    * @created          : 07/08/2023 - 11:58:08
+    * @created          : 12/08/2023 - 21:42:04
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 07/08/2023
+    * - Date            : 12/08/2023
     * - Author          : belgacem
     * - Modification    : 
 **/
-// components/Users/DeleteUser.tsx
 import React, { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const DeleteCourse = () => {
@@ -20,25 +19,28 @@ const DeleteCourse = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    const deleteUser = async () => {
+    const deleteCourse = async () => {
       try {
-        // Faire la requête API pour supprimer l'courses  avec l'ID donné
+        // Make API request to delete the course with the given ID
         await axios.delete(`http://localhost:5000/courses/${id}`);
-        // Rediriger vers la liste des courses s après la suppression réussie
+        // Redirect to the courses list page after successful deletion
         navigate('/courses');
       } catch (error) {
-        console.error('Erreur lors de la suppression de l\'courses  :', error);
-        // Afficher un message d'erreur ou une alerte en cas d'erreur
+        console.error('Error deleting course:', error);
+        // Display an error message or alert in case of an error
       }
     };
 
-    // Appeler la fonction pour supprimer courses  lorsque le composant est monté
-    deleteUser();
+    // Call the function to delete the course when the component is mounted
+    deleteCourse();
   }, [id, navigate]);
 
   return (
     <div className="container mt-5">
-      <p>Suppression de l'courses  en cours...</p>
+      <div className="alert alert-danger">
+        <h4 className="alert-heading">Deleting Course</h4>
+        <p>This course is being deleted...</p>
+      </div>
     </div>
   );
 };
