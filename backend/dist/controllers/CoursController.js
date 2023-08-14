@@ -8,6 +8,7 @@ const getAllCoursesController = async (req, res) => {
         res.status(200).json(courses);
     }
     catch (error) {
+        console.log(error);
         res.status(500).json({ message: 'Failed to get courses.' });
     }
 };
@@ -32,6 +33,20 @@ const getCourseByIdController = async (req, res) => {
     }
 };
 exports.getCourseByIdController = getCourseByIdController;
+// export const createCourseController = async (req: Request, res: Response): Promise<void> => {
+//   const course: Course = req.body;
+//   if (!course.name) {
+//     res.status(400).json({ message: 'Course name is required.' });
+//     return;
+//   }
+//   try {
+//     const createdCourse = await createCourse(course);
+//     res.status(201).json(createdCourse);
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ message: 'Failed to create course.     ',  error} ,);
+//   }
+// };
 const createCourseController = async (req, res) => {
     const course = req.body;
     if (!course.name) {
@@ -43,7 +58,8 @@ const createCourseController = async (req, res) => {
         res.status(201).json(createdCourse);
     }
     catch (error) {
-        res.status(500).json({ message: 'Failed to create course.' });
+        console.log(error);
+        res.status(500).json({ message: 'Failed to create course.', error: error });
     }
 };
 exports.createCourseController = createCourseController;
@@ -68,7 +84,7 @@ const updateCourseController = async (req, res) => {
         }
     }
     catch (error) {
-        res.status(500).json({ message: 'Failed to update course.' });
+        res.status(500).json({ message: 'Failed to update course.', error });
     }
 };
 exports.updateCourseController = updateCourseController;
@@ -92,3 +108,4 @@ const deleteCourseController = async (req, res) => {
     }
 };
 exports.deleteCourseController = deleteCourseController;
+//# sourceMappingURL=CoursController.js.map

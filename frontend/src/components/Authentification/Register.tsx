@@ -15,6 +15,7 @@ import { Form, Button } from 'react-bootstrap';
 import { useRegisterMutation } from '../../api/index';
 import { useNavigate } from 'react-router-dom';
 
+import { Link } from 'react-router-dom'; 
 
 
 const Register: React.FC = () => {
@@ -80,6 +81,17 @@ const Register: React.FC = () => {
             onChange={(e) => setNiveauEducative(e.target.value)}
             placeholder="Enter your educational level"
           />
+
+
+
+          <div className="mt-3">
+            <p className="mb-0 text-center">
+              Already have an account?{' '}
+              <Link to="/login" className="text-primary fw-bold">
+                Login
+              </Link>
+            </p>
+          </div>
         </Form.Group>
         <Button
           variant="primary"

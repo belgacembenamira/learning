@@ -19,6 +19,7 @@ export interface User {
   mail: string;
   password : string;
   niveau_educative :string;
+  verified :boolean;
   
 
 }
@@ -55,12 +56,48 @@ export const createUser = async (user: User): Promise<User> => {
 
 export const updateUser = async (id: number, user: User): Promise<User | null> => {
   try {
-    const [updatedUser] = await db(TABLE_NAME).where('id', id).update(user).returning('*');
+    // Crée un objet pour stocker les champs à mettre à jour
+    const updateUserFields: Partial<User> = {};
+
+    // Vérifiez chaque champ et mettez à jour si présent
+    if (user.name) {
+      updateUserFields.name = user.name;
+    }
+
+    if (user.mail) {
+      updateUserFields.mail = user.mail;
+    }
+
+    if (user.password) {
+      updateUserFields.password = user.password;
+    }
+
+    if (user.niveau_educative) {
+      updateUserFields.niveau_educative = user.niveau_educative;
+    }
+
+    // Vérifiez s'il y a des champs à mettre à jour
+    if (Object.keys(updateUserFields).length === 0) {
+      // Aucun champ à mettre à jour
+      return null;
+    }
+
+    // Mettez à jour l'utilisateur dans la base de données
+    const [updatedUser] = await db(TABLE_NAME)
+      .where('id', id) // Assurez-vous que l'ID est correctement utilisé
+      .update(updateUserFields)
+      .returning('*');
+
     return updatedUser || null;
   } catch (error) {
-    throw new Error(`Error while updating user with ID ${id}`);
+    console.log(error);
+    throw new Error(`Error while updating user with ID ${id}: ${error}`);
   }
 };
+
+
+
+
 
 export const deleteUser = async (id: number): Promise<number> => {
   try {

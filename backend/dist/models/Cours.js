@@ -25,8 +25,13 @@ const getCourseById = async (id) => {
 };
 exports.getCourseById = getCourseById;
 const createCourse = async (course) => {
-    const [createdCourse] = await (0, db_1.default)(TABLE_NAME).insert(course).returning('*');
-    return createdCourse;
+    try {
+        const [createdCourse] = await (0, db_1.default)(TABLE_NAME).insert(course).returning('*');
+        return createdCourse;
+    }
+    catch (error) {
+        throw error;
+    }
 };
 exports.createCourse = createCourse;
 const updateCourse = async (id, course) => {
@@ -38,3 +43,4 @@ const deleteCourse = async (id) => {
     return (0, db_1.default)(TABLE_NAME).where('id', id).delete();
 };
 exports.deleteCourse = deleteCourse;
+//# sourceMappingURL=Cours.js.map

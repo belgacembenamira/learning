@@ -16,16 +16,22 @@ const express_1 = require("express");
 const CoursController_1 = require("../controllers/CoursController");
 const UserController_1 = require("../controllers/UserController");
 const router = (0, express_1.Router)();
+// router.use(cookieParser());
 /***********************course ****************************** */
+// router.use(authenticateToken);
 router.get("/courses", CoursController_1.getAllCoursesController);
 router.get("/courses/:id", CoursController_1.getCourseByIdController);
 router.post("/courses", CoursController_1.createCourseController);
 router.put("/courses/:id", CoursController_1.updateCourseController);
 router.delete("/courses/:id", CoursController_1.deleteCourseController);
-/*********************user */
+/*********************user ************************************/
 router.get("/users", UserController_1.getAllUsersController);
 router.get("/users/:id", UserController_1.getUserByIdController);
 router.post("/users", UserController_1.createUserController);
 router.put("/users/:id", UserController_1.updateUserController);
 router.delete("/users/:id", UserController_1.deleteUserController);
+/********************AUTH USER********************** */
+router.post("/register", UserController_1.register);
+router.post("/login", UserController_1.login);
 exports.default = router;
+//# sourceMappingURL=routes.js.map
