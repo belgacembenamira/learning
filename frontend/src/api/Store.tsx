@@ -11,15 +11,18 @@
     * - Modification    : 
 **/
 import { configureStore } from '@reduxjs/toolkit';
-import { api } from './index';
+import { api } from './index'; // Import the main API configuration
+import { adminApi } from './adminApi'; // Import the admin API configuration
 
 const store = configureStore({
   reducer: {
-    [api.reducerPath]: api.reducer, // Add the API reducer to the store
+    [api.reducerPath]: api.reducer, // Add the main API reducer to the store
+    [adminApi.reducerPath]: adminApi.reducer, // Add the admin API reducer to the store
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(api.middleware), // Add the API middleware
+    getDefaultMiddleware().concat(api.middleware, adminApi.middleware), // Add both API middlewares
 });
 
 export default store;
+
 

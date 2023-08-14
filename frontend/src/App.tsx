@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
     * @description      : 
     * @author           : belgacem
@@ -24,7 +25,22 @@ import Login from './components/Authentification/Login';
 import Register from './components/Authentification/Register';
 import store from './api/Store';
 import CardCours from './components/Cours/CardCours';
-
+import GetAllProef from './components/Proef/GetAllProef';
+import GetProef from './components/Proef/GetProef';
+import CreateProefForm from './components/Proef/CreateProefForm';
+import UpdateProefForm from './components/Proef/UpdateProefForm';
+import DeleteProef from './components/Proef/DeleteProef';
+import AdminList from './components/Admin/AdminList';
+import { updateAdmin } from '../../backend/src/models/Admin';
+import UpdateAdminForm from './components/Admin/UpdateAdminForm';
+import CreateAdminForm from './components/Admin/CreateAdminForm';
+import AdminDetail from './components/Admin/AdminDetail';
+import CommandeForm from './components/Command/CommandeForm';
+import CommandeList from './components/Command/CommandeList';
+import { updateCommande } from '../../backend/src/models/Commande';
+import CommandeUpdateForm from './components/Command/CommandeUpdateForm';
+import CommandeDetails from './components/Command/CommandeDetails';
+  
 function App() {
   return (
     <Provider store={store}>
@@ -42,6 +58,32 @@ function App() {
           <Route path="/create-course" element={<CreateCourse />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          {/*********Proef******************* */}
+          <Route path="/Proef" element={<GetAllProef />} />
+          <Route path="/proef-details/:id" element={<GetProef />} />
+          <Route path="/create-proef" element={<CreateProefForm/>} />
+          <Route path="/edit-proef/:id" element={<UpdateProefForm />} />
+          <Route path="/delete-proef/:id" element={<DeleteProef />} />
+         { /******************Admin********************************** */}
+         <Route path="/Admin" element={<AdminList />} />
+         <Route path="/create-admin" element={<CreateAdminForm />} />
+         <Route path="/Admin-update/:id" element={<UpdateAdminForm  />} />
+         <Route path="/Admin-details/:id" element={<AdminDetail  />} />
+         <Route path="/commande" element={<CommandeForm />} />
+         <Route path="/commande/:id" element={<CommandeUpdateForm  />} />
+         <Route path="/AllCommande" element={<CommandeList />} />
+         <Route path="/commandes-details/:id/" element={<CommandeDetails />} />
+
+
+
+
+       
+       
+
+
+
+
+
         </Routes>
       </div>
     </Provider>

@@ -14,7 +14,7 @@
 import { NextFunction, Request, Response } from "express";
 import * as CommandeModel from "../models/Commande";
 import { createCommande } from "../models/Commande";
-import Stripe from 'stripe';
+import   Stripe from 'stripe';
 
 export const getAllCommandesController = async (
   req: Request,
@@ -48,17 +48,23 @@ export const getCommandeByIdController = async (
 };
 
 
+
+
+
+
 const stripeSecretKey = 'sk_test_51MwFg1GRr5LN8XFFpv4lyuMd4hZRsQhBVp1xwXPMLu9GSPix42hk1KFyfeLHuZ7mxDOsSB1q4mxzHFt4ZRiF7UQm00RAuZhvJV';
-const stripeClient = new Stripe(stripeSecretKey, {
-  apiVersion: '2020-08-27', // Remplacez par la version d'API Stripe que vous utilisez
-} as unknown as Stripe.StripeConfig); // Spécifiez le type de configuration explicitement
+
+const stripe = new Stripe(stripeSecretKey, {
+  apiVersion: '2022-11-15',
+  typescript:true
+});
 
 export const createCommandeController = async (req: Request, res: Response) => {
   try {
     const newCommande = req.body;
 
-    // Créez une session de paiement avec Stripe et récupérez l'ID de session
-    const session = await stripeClient.checkout.sessions.create({
+    // Create a payment session with Stripe
+    const sessionParams: Stripe.Checkout.SessionCreateParams = {
       payment_method_types: ['card'],
       line_items: [
         {
@@ -73,17 +79,20 @@ export const createCommandeController = async (req: Request, res: Response) => {
         },
       ],
       mode: 'payment',
-      success_url: 'http://localhost:5000/success',
-      cancel_url: 'http://localhost:5000/canceled',
-    });
+      success_url: 'http://localhost:3000/success',
+      cancel_url: 'http://localhost:3000/canceled',
+    };
 
-    // Assurez-vous que l'ID de session est récupéré avec succès
+    const session: Stripe.Checkout.Session = await stripe.checkout.sessions.create(sessionParams);
+
+    // Assure that the session ID is retrieved successfully
     if (session && session.id) {
-      // Ajoutez l'ID de session à la nouvelle commande
-      newCommande.stripeSessionId = session.id;
+      // Add the session ID to the new command
+      
+      newCommande.stripesessionid = session.id;
 
-      // Créez la commande dans la base de données en utilisant la fonction createCommande
-      const createdCommande = await createCommande(newCommande);
+      // Create the command in the database using the createCommande function
+      const createdCommande = await CommandeModel.createCommande(newCommande);
 
       res.json(createdCommande);
     } else {
@@ -91,20 +100,14 @@ export const createCommandeController = async (req: Request, res: Response) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error while creating a new commande' + error });
+    res.status(500).json({ error: 'Error while creating a new commande' });
   }
 };
 
 
-  
-  
-  
-  
 
-export const updateCommandeController = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+
+export const updateCommandeController = async (req: Request, res: Response): Promise<void> => {
   try {
     const id = parseInt(req.params.id);
     const updatedCommande: CommandeModel.Commande = req.body;
@@ -121,10 +124,7 @@ export const updateCommandeController = async (
   }
 };
 
-export const deleteCommandeController = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const deleteCommandeController = async (req: Request, res: Response): Promise<void> => {
   try {
     const id = parseInt(req.params.id, 10);
     const deletedCount = await CommandeModel.deleteCommande(id);

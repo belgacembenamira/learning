@@ -35,7 +35,7 @@ import {
 } from "../controllers/UserController";
 import { createProefController, deleteProefController, getAllProefController, getProefByIdController, updateProefController } from "../controllers/ProefController";
 import { getAllAdminsController, getAdminByIdController, createAdminController, updateAdminController, deleteAdminController } from "../controllers/AdminController";
-import { getAllCommandesController, getCommandeByIdController, createCommandeController, updateCommandeController, deleteCommandeController } from "../controllers/CommandeController";
+import { getAllCommandesController, getCommandeByIdController, updateCommandeController, deleteCommandeController, createCommandeController } from "../controllers/CommandeController";
 
 const router = Router();
 // router.use(cookieParser());
@@ -72,7 +72,7 @@ router.delete("/admins/:id", deleteAdminController);
 /**********************command********** */
 router.get("/commandes", getAllCommandesController);
 router.get("/commandes/:id", getCommandeByIdController);
-router.post("/commandes", createCommandeController);
+router.post("/commandes",createCommandeController );
 router.put("/commandes/:id", updateCommandeController);
 router.delete("/commandes/:id", deleteCommandeController);
 
