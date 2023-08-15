@@ -13,6 +13,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Container, Card, CardContent, Typography, TextField, Button } from '@mui/material';
+
 
 export default function UpdateCourse() {
   const { id } = useParams();
@@ -69,66 +71,61 @@ export default function UpdateCourse() {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="card bg-light p-4">
-        <h1 className="mb-4">Modifier le cours</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label">
-              Nom du cours:
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="name"
-              name="name"
-              value={course.name}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="description" className="form-label">
-              Description:
-            </label>
-            <textarea
-              className="form-control"
-              id="description"
-              name="description"
-              value={course.description}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="duration" className="form-label">
-              Durée:
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="duration"
-              name="duration"
-              value={course.duration}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="image_url" className="form-label">
-              URL de l'image:
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="image_url"
-              name="image_url"
-              value={course.image_url}
-              onChange={handleChange}
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Mettre à jour
-          </button>
-        </form>
-      </div>
+    <div style={{ backgroundColor: '#b4c3d1', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
+
+      <Container maxWidth="sm" style={{ marginTop: '2rem' }}>
+        <Card>
+          <CardContent>
+            <Typography variant="h4" gutterBottom>
+              Modifier le cours
+            </Typography>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                fullWidth
+                label="Nom du cours"
+                name="name"
+                value={course.name}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+                required
+              />
+              <TextField
+                fullWidth
+                label="Description"
+                name="description"
+                value={course.description}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+                multiline
+                rows={4}
+                required
+              />
+              <TextField
+                fullWidth
+                label="Durée"
+                name="duration"
+                value={course.duration}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+                required
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                style={{ marginTop: '1rem' }}
+              >
+                Mettre à jour
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </Container>
+
     </div>
   );
+
 }

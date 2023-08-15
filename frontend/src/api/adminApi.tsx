@@ -2,21 +2,23 @@
     * @description      : 
     * @author           : belgacem
     * @group            : 
-    * @created          : 14/08/2023 - 10:13:47
+    * @created          : 15/08/2023 - 15:28:06
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 14/08/2023
+    * - Date            : 15/08/2023
     * - Author          : belgacem
     * - Modification    : 
 **/
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
 export interface Admin {
   id: number;
   name: string;
   mail: string;
   tlf: string;
 }
+
 export const adminApi = createApi({
   reducerPath: 'adminApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000' }),
@@ -47,7 +49,7 @@ export const adminApi = createApi({
     getAdminById: builder.query<Admin, number>({
       query: (id) => ({
         url: `/admins/${id}`,
-        method: 'GET', // Method should be specified here
+        method: 'GET', // Corrected: Method should be GET
       }),
     }),
   }),
@@ -58,5 +60,5 @@ export const {
   useCreateAdminMutation,
   useUpdateAdminMutation,
   useDeleteAdminMutation,
-  useGetAdminByIdQuery} = adminApi;
-
+  useGetAdminByIdQuery
+} = adminApi;

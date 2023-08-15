@@ -2,31 +2,31 @@
     * @description      : 
     * @author           : belgacem
     * @group            : 
-    * @created          : 12/08/2023 - 21:20:41
+    * @created          : 15/08/2023 - 12:27:22
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 12/08/2023
+    * - Date            : 15/08/2023
     * - Author          : belgacem
     * - Modification    : 
 **/
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import {
+  Container,
+  Card,
+  TextField,
+  TextareaAutosize,
+  Button,
+  Grid,
+  Typography
+} from '@mui/material';
 
 const CreateCourse: React.FC = () => {
   const navigate = useNavigate();
 
-  interface Course {
-    availability: string | number |  string[] | undefined;
-    instructor: string | number |  string[] | undefined;
-    name: string;
-    description: string;
-    price: number;
-    image_url: string;
-  }
-
-  const initialCourseState: Course = {
+  const initialCourseState = {
     name: '',
     description: '',
     price: 0,
@@ -35,7 +35,7 @@ const CreateCourse: React.FC = () => {
     instructor: '',
   };
 
-  const [course, setCourse] = useState<Course>(initialCourseState);
+  const [course, setCourse] = useState(initialCourseState);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -52,7 +52,7 @@ const CreateCourse: React.FC = () => {
       if (response.status === 201) {
         navigate('/');
       } else {
-        console.error('Erreur lors de l\'ajout du cours:',);
+        console.error('Erreur lors de l\'ajout du cours:');
       }
     } catch (error) {
       console.error('Erreur lors de l\'ajout du cours:', error);
@@ -60,94 +60,84 @@ const CreateCourse: React.FC = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="card bg-light p-4">
-        <h1 className="mb-4">Ajouter un cours</h1>
-        <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-            <label htmlFor="name" className="form-label">
-              Nom du cours:
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="name"
+    <Container maxWidth="md" sx={{ marginTop: '2rem', backgroundColor: '#f4f4f4', padding: '2rem' }}>
+    <Card variant="outlined" sx={{ p: 4 }}>
+      <Typography variant="h4" gutterBottom>
+        Ajouter un cours
+      </Typography>
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <TextField
+              label="Nom du cours"
+              fullWidth
               name="name"
               value={course.name}
               onChange={handleChange}
             />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="description" className="form-label">
-              Description:
-            </label>
-            <textarea
-              className="form-control"
-              id="description"
+          </Grid>
+          <Grid item xs={12}>
+            <TextareaAutosize
+              minRows={3}
+              placeholder="Description"
               name="description"
               value={course.description}
               onChange={handleChange}
+              style={{ marginTop: '1rem', width: '100%' }}
             />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="image_url" className="form-label">
-              URL de l'image:
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="image_url"
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="URL de l'image"
+              fullWidth
               name="image_url"
               value={course.image_url}
               onChange={handleChange}
             />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="price" className="form-label">
-              Prix:
-            </label>
-            <input
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Prix"
               type="number"
-              className="form-control"
-              id="price"
+              fullWidth
               name="price"
               value={course.price}
               onChange={handleChange}
             />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="availability" className="form-label">
-              Disponibilité:
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="availability"
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Disponibilité"
+              fullWidth
               name="availability"
               value={course.availability}
               onChange={handleChange}
             />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="instructor" className="form-label">
-              Instructeur:
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="instructor"
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Instructeur"
+              fullWidth
               name="instructor"
               value={course.instructor}
               onChange={handleChange}
             />
-          </div>
-          <button type="submit" className="btn btn-primary">
+          </Grid>
+        </Grid>
+        <Grid item xs={12} sx={{ marginTop: '1rem' }}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+          >
             Ajouter
-          </button>
-        </form>
-      </div>
-    </div>
+          </Button>
+        </Grid>
+      </form>
+    </Card>
+  </Container>
+  
   );
-};
+  }  
 
 export default CreateCourse;

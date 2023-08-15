@@ -15,6 +15,10 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Visibility, Delete, Edit } from '@mui/icons-material';
+import { Typography, TableContainer, TableHead, TableRow, TableCell, TableBody, IconButton } from '@mui/material';
+import { Container, Table, Button } from 'react-bootstrap';
+
 
 interface Proef {
   id: number;
@@ -84,56 +88,84 @@ const GetAllProef: React.FC = () => {
   return (
     <div>
       <ToastContainer />
-      <div className="container">
+      <Container>
         <h1>Liste des proefs</h1>
-        <div className="table-responsive">
-          <table className="table table-bordered">
-            <thead className="thead-dark">
-              <tr>
-                <th>Nom du proef</th>
-                <th>Matricule</th>
-                <th>Mail</th>
-                <th>Numéro de téléphone</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Nom du proef</TableCell>
+                <TableCell>Matricule</TableCell>
+                <TableCell>Mail</TableCell>
+                <TableCell>Numéro de téléphone</TableCell>
+                <TableCell>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
               {proefs.map((proef) => (
-                <tr key={proef.id}>
-                  <td>{proef.name}</td>
-                  <td>{proef.matricule}</td>
-                  <td>{proef.mail}</td>
-                  <td>{proef.numero_tlf}</td>
-                  <td>
-                    <button
-                      className="btn btn-primary mr-2"
+                <TableRow key={proef.id}>
+                  <TableCell>{proef.name}</TableCell>
+                  <TableCell>{proef.matricule}</TableCell>
+                  <TableCell>{proef.mail}</TableCell>
+                  <TableCell>{proef.numero_tlf}</TableCell>
+                  <TableCell>
+                    <IconButton
+                      color="primary"
                       onClick={() => handleViewProef(proef)}
                     >
-                      Voir
-                    </button>
-                    <button
-                      className="btn btn-danger mr-2"
+                      <Visibility />
+                    </IconButton>
+                    <IconButton
+                      color="secondary"
                       onClick={() => handleDeleteProef(proef)}
                     >
-                      Supprimer
-                    </button>
-                    <button
-                      className="btn btn-warning"
+                      <Delete />
+                    </IconButton>
+                    <IconButton
+                      color="warning"
                       onClick={() => handleEditProef(proef)}
                     >
-                      Modifier
-                    </button>
-                  </td>
-                </tr>
+                      <Edit />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
-        </div>
-        <button className="btn btn-primary mb-3" onClick={handleCreateProef}>
+            </TableBody>
+          </Table>
+        </TableContainer>
+
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleCreateProef}
+          style={{
+            marginTop: '1rem',
+            backgroundColor: '#007bff', // Custom primary color
+            color: '#fff', // Text color
+            borderRadius: '4px', // Rounded corners
+            fontWeight: 'bold', // Bold text
+            letterSpacing: '0.5px', // Increased letter spacing
+            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)', // Box shadow
+            transition: 'background-color 0.3s ease', // Smooth hover transition
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.backgroundColor = '#0056b3'; // Darker color on hover
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.backgroundColor = '#007bff'; // Restore original color
+          }}
+        >
           Créer un proef
-        </button>
-      </div>
+        </Button>
+        
+
+
+
+
+
+      </Container>
     </div>
+
   );
 };
 

@@ -61,7 +61,7 @@ const DeleteProef = () => {
       <button className="btn btn-danger mr-2" onClick={handleDelete}>
         Supprimer
       </button>
-      <button className="btn btn-secondary" onClick={() => navigate('/proefs')}>
+      <button className="btn btn-secondary" onClick={() => navigate('/proef')}>
         Annuler
       </button>
       <ToastContainer />

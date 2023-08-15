@@ -40,11 +40,13 @@ import CommandeList from './components/Command/CommandeList';
 import { updateCommande } from '../../backend/src/models/Commande';
 import CommandeUpdateForm from './components/Command/CommandeUpdateForm';
 import CommandeDetails from './components/Command/CommandeDetails';
-  
+import Navbar from './page/Navbar';
+
 function App() {
   return (
     <Provider store={store}>
       <div className="App">
+        <Navbar />
         <Routes>
           {/* Define your routes */}
           {/* Define a route for the GetAllCours component */}
@@ -61,24 +63,24 @@ function App() {
           {/*********Proef******************* */}
           <Route path="/Proef" element={<GetAllProef />} />
           <Route path="/proef-details/:id" element={<GetProef />} />
-          <Route path="/create-proef" element={<CreateProefForm/>} />
+          <Route path="/create-proef" element={<CreateProefForm />} />
           <Route path="/edit-proef/:id" element={<UpdateProefForm />} />
           <Route path="/delete-proef/:id" element={<DeleteProef />} />
-         { /******************Admin********************************** */}
-         <Route path="/Admin" element={<AdminList />} />
-         <Route path="/create-admin" element={<CreateAdminForm />} />
-         <Route path="/Admin-update/:id" element={<UpdateAdminForm  />} />
-         <Route path="/Admin-details/:id" element={<AdminDetail  />} />
-         <Route path="/commande" element={<CommandeForm />} />
-         <Route path="/commande/:id" element={<CommandeUpdateForm  />} />
-         <Route path="/AllCommande" element={<CommandeList />} />
-         <Route path="/commandes-details/:id/" element={<CommandeDetails />} />
+          { /******************Admin********************************** */}
+          <Route path="/Admin" element={<AdminList />} />
+          <Route path="/create-admin" element={<CreateAdminForm />} />
+          <Route path="/Admin-update/:id" element={<UpdateAdminForm />} />
+          <Route path="/Admin-details/:id" element={<AdminDetail />} />
+          <Route path="/commande" element={<CommandeForm />} />
+          <Route path="/commande/:id" element={<CommandeUpdateForm />} />
+          <Route path="/AllCommande" element={<CommandeList />} />
+          <Route path="/commandes-details/:id/" element={<CommandeDetails />} />
 
 
 
 
-       
-       
+
+
 
 
 

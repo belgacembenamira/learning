@@ -2,97 +2,111 @@
     * @description      : 
     * @author           : belgacem
     * @group            : 
-    * @created          : 14/08/2023 - 11:56:03
+    * @created          : 15/08/2023 - 15:18:06
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 14/08/2023
+    * - Date            : 15/08/2023
     * - Author          : belgacem
     * - Modification    : 
 **/
 import React, { useState } from 'react';
+import { Container, Typography, TextField, Button, CircularProgress } from '@mui/material';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import { useCreateAdminMutation } from '../../api/adminApi';
-import { Admin } from '../../api/adminApi';
+
+interface Admin {
+  id: number;
+  name: string;
+  mail: string;
+  tlf: string;
+}
 
 const CreateAdminForm: React.FC = () => {
-    const [newAdmin, setNewAdmin] = useState<Admin>({
-        id:0,
-        name: '',
-        mail: '',
-        tlf: '',
-    });
+  const [newAdmin, setNewAdmin] = useState<Admin>({
+    id: 0,
+    name: '',
+    mail: '',
+    tlf: '',
+  });
 
-    const [createAdmin, { isLoading: isCreating }] = useCreateAdminMutation();
+  const [createAdmin, { isLoading: isCreating }] = useCreateAdminMutation();
 
-    const handleInputChange = (
-        e: React.ChangeEvent<HTMLInputElement>
-    ): void => {
-        const { name, value } = e.target;
-        setNewAdmin((prevAdmin) => ({
-            ...prevAdmin,
-            [name]: value,
-        }));
-    };
+  const navigate = useNavigate(); // Initialize useHistory
 
-    const handleSubmit = async (e: React.FormEvent): Promise<void> => {
-        e.preventDefault();
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const { name, value } = e.target;
+    setNewAdmin((prevAdmin) => ({
+      ...prevAdmin,
+      [name]: value,
+    }));
+  };
 
-        try {
-            await createAdmin(newAdmin).unwrap();
-            // Handle successful creation, redirect, or show a success message
-        } catch (error) {
-            // Handle error
-            console.error('Error creating admin:', error);
-        }
-    };
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
+    e.preventDefault();
 
-    return (
-        <div className="container mt-5">
-            <h2>Create Admin</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>Name</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        name="name"
-                        value={newAdmin.name}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label>Mail</label>
-                    <input
-                        type="email"
-                        className="form-control"
-                        name="mail"
-                        value={newAdmin.mail}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label>Tlf</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        name="tlf"
-                        value={newAdmin.tlf}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-                <button
-                    type="submit"
-                    className="btn btn-primary"
-                    disabled={isCreating}
-                >
-                    {isCreating ? 'Creating...' : 'Create Admin'}
-                </button>
-            </form>
-        </div>
-    );
+    try {
+      await createAdmin(newAdmin).unwrap();
+      navigate('/Admin'); // Use navigate to navigate
+
+      // Handle successful creation, redirect, or show a success message
+    } catch (error) {
+      // Handle error
+      console.error('Error creating admin:', error);
+    }
+  };
+
+  return (
+    <Container maxWidth="md" style={{ marginTop: '5rem' }}>
+      <Typography variant="h4" gutterBottom>
+        Create Admin
+      </Typography>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          fullWidth
+          label="Name"
+          name="name"
+          value={newAdmin.name}
+          onChange={handleInputChange}
+          required
+          margin="normal"
+          variant="outlined"
+        />
+        <TextField
+          fullWidth
+          label="Mail"
+          name="mail"
+          value={newAdmin.mail}
+          onChange={handleInputChange}
+          required
+          margin="normal"
+          variant="outlined"
+        />
+        <TextField
+          fullWidth
+          label="Tlf"
+          name="tlf"
+          value={newAdmin.tlf}
+          onChange={handleInputChange}
+          required
+          margin="normal"
+          variant="outlined"
+        />
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={isCreating}
+          style={{ marginTop: '1rem' }}
+        >
+          {isCreating ? <CircularProgress size={20} /> : 'Create Admin'}
+        </Button>
+      </form>
+    </Container>
+  );
 };
 
 export default CreateAdminForm;
+

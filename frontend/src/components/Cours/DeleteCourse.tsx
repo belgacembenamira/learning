@@ -2,16 +2,17 @@
     * @description      : 
     * @author           : belgacem
     * @group            : 
-    * @created          : 12/08/2023 - 21:42:04
+    * @created          : 15/08/2023 - 13:47:46
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 12/08/2023
+    * - Date            : 15/08/2023
     * - Author          : belgacem
     * - Modification    : 
 **/
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Container, Typography, CircularProgress } from '@mui/material';
 import axios from 'axios';
 
 const DeleteCourse = () => {
@@ -36,12 +37,15 @@ const DeleteCourse = () => {
   }, [id, navigate]);
 
   return (
-    <div className="container mt-5">
-      <div className="alert alert-danger">
-        <h4 className="alert-heading">Deleting Course</h4>
-        <p>This course is being deleted...</p>
+    <Container maxWidth="sm" style={{ marginTop: '2rem' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <CircularProgress style={{ marginBottom: '1rem' }} />
+        <Typography variant="h6">Deleting Course</Typography>
+        <Typography variant="body2" color="textSecondary">
+          This course is being deleted...
+        </Typography>
       </div>
-    </div>
+    </Container>
   );
 };
 

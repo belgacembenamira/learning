@@ -2,19 +2,20 @@
     * @description      : 
     * @author           : belgacem
     * @group            : 
-    * @created          : 11/08/2023 - 21:09:44
+    * @created          : 15/08/2023 - 12:19:34
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 11/08/2023
+    * - Date            : 15/08/2023
     * - Author          : belgacem
     * - Modification    : 
 **/
-
 import React, { useState } from 'react';
 import { useLoginMutation } from '../../api';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
+import { MDBIcon, MDBInput, MDBBtn, MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage } from 'mdb-react-ui-kit';
+import { Typography } from '@mui/material';
 
 const Login: React.FC = () => {
   const [mail, setMail] = useState('');
@@ -35,43 +36,63 @@ const Login: React.FC = () => {
   };
 
   return (
-<div className="w-50 mx-auto mt-5">
-      <h2>Login</h2>
-      <Form>
-        <Form.Group controlId="mail">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="email"
-            value={mail}
-            onChange={(e) => setMail(e.target.value)}
-            placeholder="Enter your email"
-          />
-        </Form.Group>
-        <Form.Group controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
-          />
-        </Form.Group>
-        <Button
-          variant="primary"
-          onClick={handleLogin}
-          disabled={isLoading}
-          className="w-100"
-        >
-          {isLoading ? 'Logging in...' : 'Login'}
-        </Button>
-        {isError && <p className="text-danger mt-2">Invalid credentials.</p>}
-      </Form>
-    </div>
+    <MDBContainer fluid>
+      <MDBCard className='text-black m-5' style={{ borderRadius: '25px' }}>
+        <MDBCardBody>
+          <MDBRow>
+            <MDBCol md='10' lg='6' className='order-2 order-lg-1 d-flex flex-column align-items-center'>
+              <Typography variant="h3" align="center" sx={{ fontWeight: 'bold', marginBottom: '2rem' }}>
+                Connexion
+              </Typography>
+
+              <div className="d-flex flex-row align-items-center mb-4">
+                <MDBIcon fas icon="envelope me-3" size='lg' />
+                <div className="w-100">
+                  <MDBInput
+                    label='Votre Email'
+                    id='form2'
+                    type='email'
+                    value={mail}
+                    onChange={(e) => setMail(e.target.value)}
+                    className="mb-0"
+                    style={{ border: '1px solid #ced4da' }} // Ajoutez la bordure ici
+                  />
+                </div>
+              </div>
+
+              <div className="d-flex flex-row align-items-center mb-4">
+                <MDBIcon fas icon="lock me-3" size='lg' />
+                <div className="w-100">
+                  <MDBInput
+                    label='Mot de passe'
+                    id='form3'
+                    type='password'
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="mb-0"
+                    style={{ border: '1px solid #ced4da' }} // Ajoutez la bordure ici
+                  />
+                </div>
+              </div>
 
 
+
+              <div className="d-flex justify-content-center">
+                <MDBBtn color='primary' size='lg' onClick={handleLogin}>
+                  Se connecter
+                </MDBBtn>
+              </div>
+            </MDBCol>
+
+
+            <MDBCol md='10' lg='6' className='order-1 order-lg-2 d-flex align-items-center'>
+              <MDBCardImage src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp' fluid />
+            </MDBCol>
+          </MDBRow>
+        </MDBCardBody>
+      </MDBCard>
+    </MDBContainer>
   );
 };
 
 export default Login;
-
-
