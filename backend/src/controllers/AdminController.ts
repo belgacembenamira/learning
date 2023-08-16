@@ -97,3 +97,5 @@ export const deleteAdminController = async (
     res.status(500).json({ error: "Error while deleting admin" });
   }
 };
+
+

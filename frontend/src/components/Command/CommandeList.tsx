@@ -2,31 +2,33 @@
     * @description      : 
     * @author           : belgacem
     * @group            : 
-    * @created          : 14/08/2023 - 13:47:51
+    * @created          : 16/08/2023 - 12:01:49
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 14/08/2023
+    * - Date            : 16/08/2023
     * - Author          : belgacem
     * - Modification    : 
 **/
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Table from 'react-bootstrap/Table';
+import { useNavigate } from 'react-router-dom';
+import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper, Typography, IconButton } from '@mui/material';
+import { Edit, Details } from '@mui/icons-material';
+
 interface Commande {
-    id: number;
-    name_command: string;
-    name_user: string;
-    numero_tlf_users: string;
-    price: number;
-    name_cours: string;
-    stripeSessionId: string; // Make sure this matches the column name in your database
-  }
-  
-  
+  id: number;
+  name_command: string;
+  name_user: string;
+  numero_tlf_users: string;
+  price: number;
+  name_cours: string;
+  stripeSessionId: string;
+}
 
 const CommandeList: React.FC = () => {
-  const [commandes, setCommandes] = useState([]);
+  const navigate = useNavigate();
+  const [commandes, setCommandes] = useState<Commande[]>([]);
 
   useEffect(() => {
     fetchCommandes();
@@ -42,26 +44,47 @@ const CommandeList: React.FC = () => {
   };
 
   return (
-    <div>
-      <h2>Commande List</h2>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Name Command</th>
-            <th>Name User</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {commandes.map((commande : Commande) => (
-            <tr key={commande.id}>
-              <td>{commande.name_command}</td>
-              <td>{commande.name_user}</td>
-              <td>{commande.price}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+    <div style={{ marginTop: '2rem' }}>
+      <Typography variant="h5" gutterBottom>
+        Commande List
+      </Typography>
+      <TableContainer component={Paper}>
+        <Table aria-label="Commande Table">
+          <TableHead>
+            <TableRow>
+              <TableCell>ID</TableCell>
+              <TableCell>Name Command</TableCell>
+              <TableCell>Name User</TableCell>
+              <TableCell>Price</TableCell>
+              <TableCell>Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {commandes.map((commande) => (
+              <TableRow key={commande.id}>
+                <TableCell>{commande.id}</TableCell>
+                <TableCell>{commande.name_command}</TableCell>
+                <TableCell>{commande.name_user}</TableCell>
+                <TableCell>{commande.price}</TableCell>
+                <TableCell>
+                  <IconButton
+                    onClick={() => navigate(`/commande/${commande.id}`)}
+                    aria-label="Edit"
+                  >
+                    <Edit />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => navigate(`/commandes-details/${commande.id}`)}
+                    aria-label="Details"
+                  >
+                    <Details />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 };

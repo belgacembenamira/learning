@@ -37,10 +37,11 @@ import CreateAdminForm from './components/Admin/CreateAdminForm';
 import AdminDetail from './components/Admin/AdminDetail';
 import CommandeForm from './components/Command/CommandeForm';
 import CommandeList from './components/Command/CommandeList';
-import { updateCommande } from '../../backend/src/models/Commande';
 import CommandeUpdateForm from './components/Command/CommandeUpdateForm';
 import CommandeDetails from './components/Command/CommandeDetails';
 import Navbar from './page/Navbar';
+import RegisterProef from './components/Proef/RegisterProef';
+import LoginProef from './components/Proef/LoginProef';
 
 function App() {
   return (
@@ -66,6 +67,8 @@ function App() {
           <Route path="/create-proef" element={<CreateProefForm />} />
           <Route path="/edit-proef/:id" element={<UpdateProefForm />} />
           <Route path="/delete-proef/:id" element={<DeleteProef />} />
+          <Route path="/RegisterProef" element={<RegisterProef />} />
+          <Route path="/loginProef" element={<LoginProef />} />
           { /******************Admin********************************** */}
           <Route path="/Admin" element={<AdminList />} />
           <Route path="/create-admin" element={<CreateAdminForm />} />

@@ -18,6 +18,7 @@ export interface proef {
   matricule: string;
   mail: string;
   numero_tlf: string;
+  password : string;
 }
 
 const TABLE_NAME = 'proef';
@@ -31,14 +32,26 @@ export const getProefById = async (id: number): Promise<proef | null> => {
   return proefs.length ? proefs[0] : null;
 };
 
-export const createProef = async (proef: proef): Promise<proef> => {
+export const createProef = async (proef: proef): Promise<proef | null> => {
   try {
-    const [createdProef] = await db(TABLE_NAME).insert(proef).returning('*');
-    return createdProef;
+    const [createdProef] = await db(TABLE_NAME)
+      .insert({
+        mail: proef.mail,
+        password: proef.password,
+        name: proef.name,
+        matricule: proef.matricule,
+        numero_tlf: proef.numero_tlf
+      })
+      .returning('*');
+
+    return createdProef || null;
   } catch (error) {
     throw error;
   }
 };
+
+
+
 
 export const updateProef = async (id: number, proef: proef): Promise<proef | null> => {
   const [updatedProef] = await db(TABLE_NAME).where('id', id).update(proef).returning('*');
@@ -48,3 +61,16 @@ export const updateProef = async (id: number, proef: proef): Promise<proef | nul
 export const deleteProef = async (id: number): Promise<number> => {
   return db(TABLE_NAME).where('id', id).delete();
 };
+export const getProefByMail = async (mail: string): Promise<proef | null> => {
+  // const proef = await db(TABLE_NAME).whereRaw('LOWER("mail") = ?', mail.toLowerCase()).first();
+  const proef = await db(TABLE_NAME).whereRaw('LOWER("mail") = ?', mail.toLowerCase()).first();
+  return proef || null;
+};
+
+
+
+
+export const deleteAllProef = async (): Promise<number> => {
+  return db(TABLE_NAME).del();
+};
+

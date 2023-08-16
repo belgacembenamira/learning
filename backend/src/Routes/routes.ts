@@ -33,7 +33,7 @@ import {
   
   updateUserController,
 } from "../controllers/UserController";
-import { createProefController, deleteProefController, getAllProefController, getProefByIdController, updateProefController } from "../controllers/ProefController";
+import { createProefController, deleteAllProefController, deleteProefController, getAllProefController, getProefByIdController, loginProefController, registerProef, updateProefController } from "../controllers/ProefController";
 import { getAllAdminsController, getAdminByIdController, createAdminController, updateAdminController, deleteAdminController } from "../controllers/AdminController";
 import { getAllCommandesController, getCommandeByIdController, updateCommandeController, deleteCommandeController, createCommandeController } from "../controllers/CommandeController";
 
@@ -60,9 +60,14 @@ router.delete("/users/:id", deleteUserController);
 router.get("/proefs", getAllProefController);
 router.get("/proefs/:id", getProefByIdController);
 router.post("/proefs", createProefController);
+router.delete("/proefs/", deleteAllProefController);
+
 /*** put lazema naselha *************** */
 router.put("/proefs/:id", updateProefController);
 router.delete("/proefs/:id", deleteProefController);
+router.post("/registerProef", registerProef);
+router.post("/loginProef", loginProefController);
+
 /*************************Admin ************ */
 router.get("/admins", getAllAdminsController);
 router.get("/admins/:id", getAdminByIdController);

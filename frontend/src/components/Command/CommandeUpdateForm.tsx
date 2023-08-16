@@ -2,26 +2,31 @@
     * @description      : 
     * @author           : belgacem
     * @group            : 
-    * @created          : 14/08/2023 - 13:52:26
+    * @created          : 16/08/2023 - 12:11:01
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 14/08/2023
+    * - Date            : 16/08/2023
     * - Author          : belgacem
     * - Modification    : 
 **/
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+    Container,
+    Typography,
+    TextField,
+    Button,
+} from '@mui/material';
 
 interface CommandeUpdateFormProps {
     commandeId: number;
 }
 
-
-
 const CommandeUpdateForm: React.FC = () => {
-    const { id } = useParams<{ id: string }>(); // Retrieve id from URL
+    const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate(); // Use navigate hook here
 
     const [commandeData, setCommandeData] = useState({
         name_command: '',
@@ -59,74 +64,83 @@ const CommandeUpdateForm: React.FC = () => {
             const response = await axios.put(`http://localhost:5000/commandes/${id}`, commandeData);
             console.log('Commande updated:', response.data);
             // Optionally: Redirect or show success message
+            navigate('/AllCommande'); // Navigate to AllCommande after successful update
         } catch (error) {
             console.error('Error updating commande:', error);
             // Handle error
         }
-    }
+    };
+
     return (
-        <div className="container">
-        <h2>Update Commande</h2>
-        <form onSubmit={handleUpdate}>
-            <div className="form-group">
-                <label>Name Command:</label>
-                <input
-                    className="form-control"
-                    type="text"
+        <Container maxWidth="md" style={{ marginTop: '2rem' }}>
+            <Typography variant="h4" gutterBottom>
+                Update Commande
+            </Typography>
+            <form onSubmit={handleUpdate}>
+                <TextField
+                    fullWidth
+                    label="Name Command"
                     name="name_command"
                     value={commandeData.name_command}
                     onChange={handleInputChange}
                     required
+                    variant="outlined"
+                    margin="normal"
                 />
-            </div>
-            <div className="form-group">
-                <label>Name User:</label>
-                <input
-                    className="form-control"
-                    type="text"
+                <TextField
+                    fullWidth
+                    label="Name User"
                     name="name_user"
                     value={commandeData.name_user}
                     onChange={handleInputChange}
                     required
+                    variant="outlined"
+                    margin="normal"
                 />
-            </div>
-            <div className="form-group">
-                <label>Numero TLF Users:</label>
-                <input
-                    className="form-control"
-                    type="text"
+                <TextField
+                    fullWidth
+                    label="Numero TLF Users"
                     name="numero_tlf_users"
                     value={commandeData.numero_tlf_users}
                     onChange={handleInputChange}
                     required
+                    variant="outlined"
+                    margin="normal"
                 />
-            </div>
-            <div className="form-group">
-                <label>Price:</label>
-                <input
-                    className="form-control"
-                    type="number"
+                <TextField
+                    fullWidth
+                    label="Price"
                     name="price"
+                    type="number"
                     value={commandeData.price}
                     onChange={handleInputChange}
                     required
+                    variant="outlined"
+                    margin="normal"
                 />
-            </div>
-            <div className="form-group">
-                <label>Name Cours:</label>
-                <input
-                    className="form-control"
-                    type="text"
+                <TextField
+                    fullWidth
+                    label="Name Cours"
                     name="name_cours"
                     value={commandeData.name_cours}
                     onChange={handleInputChange}
                     required
+                    variant="outlined"
+                    margin="normal"
                 />
-            </div>
-            <button className="btn btn-primary" type="submit">Update Commande</button>
-        </form>
-    </div>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    style={{ marginTop: '1rem' }}
+                >
+                    Update Commande
+                </Button>
+            </form>
+
+        </Container>
     );
 };
 
 export default CommandeUpdateForm;
+

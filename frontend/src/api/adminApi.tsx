@@ -16,7 +16,8 @@ export interface Admin {
   id: number;
   name: string;
   mail: string;
-  tlf: string;
+  tlf:string;
+  
 }
 
 export const adminApi = createApi({
@@ -30,9 +31,10 @@ export const adminApi = createApi({
       query: (admin) => ({
         url: '/admins',
         method: 'POST',
-        body: admin,
+        body: admin, // Include the admin object as the request body
       }),
     }),
+    
     updateAdmin: builder.mutation<Admin, { id: number; admin: Admin }>({
       query: ({ id, admin }) => ({
         url: `/admins/${id}`,

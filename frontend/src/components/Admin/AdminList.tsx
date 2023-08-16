@@ -50,7 +50,7 @@ const AdminList: React.FC = () => {
   }
 
   return (
-    <Container maxWidth="md" style={{ marginTop: '5rem' }}>
+    <Container maxWidth="md" style={{ marginTop: '2rem', background: '#f4f4f4', padding: '2rem' }}>
       <Typography variant="h4" gutterBottom>
         List of Admins
       </Typography>
@@ -59,7 +59,7 @@ const AdminList: React.FC = () => {
           <TableRow>
             <TableCell>Name</TableCell>
             <TableCell>Mail</TableCell>
-            <TableCell>Tlf</TableCell>
+            <TableCell>numero_tlf</TableCell>
             <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>

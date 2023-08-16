@@ -92,72 +92,72 @@ const GetAllCourses: React.FC = () => {
   return (
     <div>
       <ToastContainer />
-      <Container maxWidth="md" sx={{ marginTop: '2rem' }}>
-        <Typography variant="h4" gutterBottom>
-          Liste des cours
-        </Typography>
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Nom du cours</TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell>Prix</TableCell>
-                <TableCell>Disponibilité</TableCell>
-                <TableCell>Instructeur</TableCell>
-                <TableCell>Actions</TableCell>
+      <Container maxWidth="lg" style={{ marginTop: '2rem', padding: '2rem' }}>
+      <Typography variant="h4" gutterBottom>
+        Liste des cours
+      </Typography>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Nom du cours</TableCell>
+              <TableCell>Description</TableCell>
+              <TableCell>Prix</TableCell>
+              <TableCell>Disponibilité</TableCell>
+              <TableCell>Instructeur</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {courses.map((course) => (
+              <TableRow key={course.id}>
+                <TableCell>{course.name}</TableCell>
+                <TableCell>{course.description}</TableCell>
+                <TableCell>${course.price}</TableCell>
+                <TableCell>{course.availability}</TableCell>
+                <TableCell>{course.instructor}</TableCell>
+                <TableCell>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleViewCourse(course)}
+                      startIcon={<Visibility />}
+                    >
+                      Voir
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => handleDeleteCourse(course)}
+                      startIcon={<Delete />}
+                    >
+                      Supprimer
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleEditCourse(course)}
+                      startIcon={<Edit />}
+                    >
+                      Modifier
+                    </Button>
+                  </div>
+                </TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {courses.map((course) => (
-                <TableRow key={course.id}>
-                  <TableCell>{course.name}</TableCell>
-                  <TableCell>{course.description}</TableCell>
-                  <TableCell>${course.price}</TableCell>
-                  <TableCell>{course.availability}</TableCell>
-                  <TableCell>{course.instructor}</TableCell>
-                  <TableCell>
-                    <div style={{ display: 'flex', gap: '8px' }}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => handleViewCourse(course)}
-                        startIcon={<Visibility />}
-                      >
-                        Voir
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => handleDeleteCourse(course)}
-                        startIcon={<Delete />}
-                      >
-                        Supprimer
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="warning"
-                        onClick={() => handleEditCourse(course)}
-                        startIcon={<Edit />}
-                      >
-                        Modifier
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleCreateCourse}
-          style={{ marginTop: '1rem' }}
-        >
-          Créer un cours
-        </Button>
-      </Container>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleCreateCourse}
+        style={{ marginTop: '1rem' }}
+      >
+        Créer un cours
+      </Button>
+    </Container>
     </div>
 
   );

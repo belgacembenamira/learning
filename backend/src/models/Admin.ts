@@ -48,3 +48,7 @@ export const updateAdmin = async (id: number, admin: Admin): Promise<Admin | nul
 export const deleteAdmin = async (id: number): Promise<number> => {
   return db(TABLE_NAME).where('id', id).delete();
 };
+
+export function findUserByEmail(mail: any) {
+  throw new Error("Function not implemented.");
+}

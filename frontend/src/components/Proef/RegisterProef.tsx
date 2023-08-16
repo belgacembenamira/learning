@@ -2,62 +2,68 @@
     * @description      : 
     * @author           : belgacem
     * @group            : 
-    * @created          : 15/08/2023 - 20:16:14
+    * @created          : 16/08/2023 - 10:52:51
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 15/08/2023
+    * - Date            : 16/08/2023
     * - Author          : belgacem
     * - Modification    : 
 **/
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
-
-
-import { Admin, useCreateAdminMutation } from '../../api/adminApi';
 import { Typography, Grid, TextField, CircularProgress, Container, Button } from '@mui/material';
+import axios from 'axios';
 
-const CreateAdminForm: React.FC = () => {
-  const [newAdmin, setNewAdmin] = useState<Admin>({
-    id: 0,
+const RegisterProef: React.FC = () => {
+  const [proef, setProef] = useState({
     name: '',
     mail: '',
-    tlf: '',
+    password: '',
   });
 
-  const [createAdmin, { isLoading: isCreating }] = useCreateAdminMutation();
+  const [isCreating, setIsCreating] = useState(false);
 
-  const navigate = useNavigate(); // Initialize useHistory
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ): void => {
     const { name, value } = e.target;
-    setNewAdmin((prevAdmin: any) => ({
-      ...prevAdmin,
+    setProef((prevProef) => ({
+      ...prevProef,
       [name]: value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
+    setIsCreating(true);
 
     try {
-      await createAdmin(newAdmin).unwrap();
-      navigate('/Admin'); // Use navigate to navigate
+      // Call your registration API using Axios
+      const response = await axios.post('http://localhost:5000/registerProef', {
+        name: proef.name,
+        mail: proef.mail,
+        password: proef.password,
+      });
 
-      // Handle successful creation, redirect, or show a success message
+      console.log('Registration successful:', response.data.message);
+      // You can add further navigation or UI changes here upon successful registration
+      navigate('/loginPrpef'); // Redirect to login page
     } catch (error) {
-      // Handle error
-      console.error('Error creating admin:', error);
+      console.error('Registration failed:', error);
+      // Handle errors or show error messages to the user
     }
+
+    setIsCreating(false);
   };
 
   return (
     <Container maxWidth="xs" style={{ marginTop: '5rem' }}>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Typography variant="h4" gutterBottom>
-          Create Admin
+          Register
         </Typography>
         <form onSubmit={handleSubmit} style={{ width: '100%' }}>
           <Grid container spacing={2}>
@@ -66,7 +72,7 @@ const CreateAdminForm: React.FC = () => {
                 fullWidth
                 label="Name"
                 name="name"
-                value={newAdmin.name}
+                value={proef.name}
                 onChange={handleInputChange}
                 required
                 variant="outlined"
@@ -75,9 +81,9 @@ const CreateAdminForm: React.FC = () => {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Mail"
+                label="Email"
                 name="mail"
-                value={newAdmin.mail}
+                value={proef.mail}
                 onChange={handleInputChange}
                 required
                 variant="outlined"
@@ -86,9 +92,10 @@ const CreateAdminForm: React.FC = () => {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="tlf"
-                name="tlf"
-                value={newAdmin.tlf}
+                label="Password"
+                name="password"
+                type="password"
+                value={proef.password}
                 onChange={handleInputChange}
                 required
                 variant="outlined"
@@ -102,7 +109,7 @@ const CreateAdminForm: React.FC = () => {
             disabled={isCreating}
             style={{ marginTop: '1rem', width: '100%' }}
           >
-            {isCreating ? <CircularProgress size={20} /> : 'Create Admin'}
+            {isCreating ? <CircularProgress size={20} /> : 'Register'}
           </Button>
         </form>
       </div>
@@ -110,4 +117,4 @@ const CreateAdminForm: React.FC = () => {
   );
 };
 
-export default CreateAdminForm;
+export default RegisterProef;
