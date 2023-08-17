@@ -21,6 +21,7 @@ import {
   TableBody,
   Button,
   TableContainer,
+  Paper,
 } from '@mui/material';
 import { Edit, Delete, Visibility } from '@mui/icons-material';
 import { ToastContainer, toast } from 'react-toastify'; // Import ToastContainer if needed
@@ -107,92 +108,97 @@ const CourseList: React.FC = () => {
 
   return (
     <div>
-      <ToastContainer />
-      <Container maxWidth="lg" style={{ marginTop: '2rem', padding: '2rem' }}>
-        <Typography variant="h4" gutterBottom>
-          Liste des cours
-        </Typography>
-        <form>
-          <input
-            type="text"
-            placeholder="Chercher par nom du cours"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            style={{ marginBottom: '1rem', padding: '8px' }}
-          />
-        </form>
-        <TableContainer>
-          <Table>
-            <TableHead>
+    <ToastContainer />
+    <Container maxWidth="lg" style={{ marginTop: '2rem', padding: '2rem' }}>
+      <Typography variant="h4" gutterBottom style={{ color: 'red', textAlign: 'center' }}>
+        Liste des cours
+      </Typography>
+  
+      <div style={{ marginBottom: '1rem', padding: '8px', textAlign: 'center' }}>
+        <input
+          type="text"
+          placeholder="Chercher par nom du cours"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          style={{ width: '100%', padding: '8px' }}
+        />
+      </div>
+  
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Nom du cours</TableCell>
+              <TableCell>Description</TableCell>
+              <TableCell>Prix</TableCell>
+              <TableCell>Disponibilité</TableCell>
+              <TableCell>Instructeur</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {filteredCourses.length === 0 ? (
               <TableRow>
-                <TableCell>Nom du cours</TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell>Prix</TableCell>
-                <TableCell>Disponibilité</TableCell>
-                <TableCell>Instructeur</TableCell>
-                <TableCell>Actions</TableCell>
+                <TableCell colSpan={6}>Aucun cours trouvé.</TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredCourses.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={6}>Aucun cours trouvé.</TableCell>
+            ) : (
+              filteredCourses.map((course) => (
+                <TableRow key={course.id}>
+                  <TableCell>{course.name}</TableCell>
+                  <TableCell>{course.description}</TableCell>
+                  <TableCell>${course.price}</TableCell>
+                  <TableCell>{course.availability}</TableCell>
+                  <TableCell>{course.instructor}</TableCell>
+                  <TableCell>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <Button
+                        className="action-button"
+                        variant="contained"
+                        color="primary"
+                        onClick={() => handleViewCourse(course)}
+                        startIcon={<Visibility />}
+                      >
+                        Voir
+                      </Button>
+                      <Button
+                        className="action-button"
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => handleDeleteCourse(course)}
+                        startIcon={<Delete />}
+                      >
+                        Supprimer
+                      </Button>
+                      <Button
+                        className="action-button"
+                        variant="contained"
+                        color="primary"
+                        onClick={() => handleEditCourse(course)}
+                        startIcon={<Edit />}
+                      >
+                        Modifier
+                      </Button>
+                    </div>
+                  </TableCell>
                 </TableRow>
-              ) : (
-                filteredCourses.map((course) => (
-                  <TableRow key={course.id}>
-                    <TableCell>{course.name}</TableCell>
-                    <TableCell>{course.description}</TableCell>
-                    <TableCell>${course.price}</TableCell>
-                    <TableCell>{course.availability}</TableCell>
-                    <TableCell>{course.instructor}</TableCell>
-                    <TableCell>
-                      <div style={{ display: 'flex', gap: '8px' }}>
-                        <Button
-                          className="action-button"
-                          variant="contained"
-                          color="primary"
-                          onClick={() => handleViewCourse(course)}
-                          startIcon={<Visibility />}
-                        >
-                          Voir
-                        </Button>
-                        <Button
-                          className="action-button"
-                          variant="contained"
-                          color="secondary"
-                          onClick={() => handleDeleteCourse(course)}
-                          startIcon={<Delete />}
-                        >
-                          Supprimer
-                        </Button>
-                        <Button
-                          className="action-button"
-                          variant="contained"
-                          color="primary"
-                          onClick={() => handleEditCourse(course)}
-                          startIcon={<Edit />}
-                        >
-                          Modifier
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+  
+      <div style={{ textAlign: 'center', marginTop: '1rem' }}>
         <Button
           variant="contained"
           color="primary"
           onClick={handleCreateCourse}
-          style={{ marginTop: '1rem' }}
         >
           Créer un cours
         </Button>
-      </Container>
-    </div>
+      </div>
+    </Container>
+  </div>
+  
   );
 };
 

@@ -50,7 +50,7 @@ const RegisterProef: React.FC = () => {
 
       console.log('Registration successful:', response.data.message);
       // You can add further navigation or UI changes here upon successful registration
-      navigate('/loginPrpef'); // Redirect to login page
+      navigate('/loginproef'); // Redirect to login page
     } catch (error) {
       console.error('Registration failed:', error);
       // Handle errors or show error messages to the user

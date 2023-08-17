@@ -61,7 +61,8 @@ const CreateProefForm = () => {
     <Container maxWidth="md" style={{ paddingTop: '2rem' }}>
       <Card>
         <CardContent>
-          <h2 style={{ marginBottom: '1rem' }}>Créer un proef</h2>
+          <h2 style={{ marginBottom: '1rem'  , textAlign: 'center'}}>
+            Créer un proef</h2>
           <form onSubmit={handleSubmit}>
             <TextField
               fullWidth
@@ -107,7 +108,8 @@ const CreateProefForm = () => {
               type="submit"
               variant="contained"
               color="primary"
-              style={{ marginTop: '1rem' }}
+              style={{ marginTop: '1rem', textAlign: 'center' }}
+
             >
               Créer Proef
             </Button>

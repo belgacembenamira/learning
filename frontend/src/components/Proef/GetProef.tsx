@@ -99,74 +99,77 @@ const GetProef: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="md" style={{ marginTop: '2rem' }}>
-      <Card>
-        <CardContent>
-          <Typography variant="h5" gutterBottom>
-            Détails du proef
-          </Typography>
-          {loading ? (
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <CircularProgress />
-            </div>
-          ) : proef ? (
-            <TableContainer component={Paper}>
-              <Table>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>
-                      <strong>Nom du proef:</strong>
-                    </TableCell>
-                    <TableCell>{proef.name}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <strong>Matricule:</strong>
-                    </TableCell>
-                    <TableCell>{proef.matricule}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <strong>Mail:</strong>
-                    </TableCell>
-                    <TableCell>{proef.mail}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <strong>Numéro de téléphone:</strong>
-                    </TableCell>
-                    <TableCell>{proef.numero_tlf}</TableCell>
-                  </TableRow>
-                  {/* Display other properties if needed */}
-                </TableBody>
-              </Table>
-              <Button
-  variant="contained"
-  color="error"
-  style={buttonStyle}
-  onMouseOver={(e) => {
-    e.currentTarget.style.backgroundColor = buttonHoverStyle.backgroundColor;
-  }}
-  onMouseOut={(e) => {
-    e.currentTarget.style.backgroundColor = buttonStyle.backgroundColor;
-  }}
-  onClick={handleDeleteProef}
->
-  Supprimer le proef
-</Button>
+    <Container maxWidth="md" sx={{ marginTop: '2rem' }}>
+    <Card>
+      <CardContent>
+      <Typography variant="h5" gutterBottom sx={{ textAlign: 'center' }}>
+      Détails du proef {proef?.name}
 
-            </TableContainer>
-          ) : (
-            <Typography>Proef non trouvé.</Typography>
-          )}
-        </CardContent>
-      </Card>
-      <Snackbar open={snackbarOpen} autoHideDuration={5000} onClose={handleSnackbarClose}>
-        <MuiAlert onClose={handleSnackbarClose} severity="success" variant="filled">
-          Opération réussie !
-        </MuiAlert>
-      </Snackbar>
-    </Container>
+      </Typography>
+        {loading ? (
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <CircularProgress />
+          </div>
+        ) : proef ? (
+          <TableContainer component={Paper} sx={{ marginTop: '1rem' }}>
+            <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell>
+                    <strong>Nom du proef:</strong>
+                  </TableCell>
+                  <TableCell>{proef.name}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <strong>Matricule:</strong>
+                  </TableCell>
+                  <TableCell>{proef.matricule}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <strong>Mail:</strong>
+                  </TableCell>
+                  <TableCell>{proef.mail}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <strong>Numéro de téléphone:</strong>
+                  </TableCell>
+                  <TableCell>{proef.numero_tlf}</TableCell>
+                </TableRow>
+                {/* Display other properties if needed */}
+              </TableBody>
+            </Table>
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
+            <Button
+              variant="contained"
+              color="error"
+              style={buttonStyle}
+              onMouseOver={(e) => {
+                e.currentTarget.style.backgroundColor = buttonHoverStyle.backgroundColor;
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.backgroundColor = buttonStyle.backgroundColor;
+              }}
+              onClick={handleDeleteProef}
+            >
+              Supprimer le proef
+            </Button>
+          </div>
+          </TableContainer>
+        ) : (
+          <Typography>Proef non trouvé.</Typography>
+        )}
+      </CardContent>
+    </Card>
+    <Snackbar open={snackbarOpen} autoHideDuration={5000} onClose={handleSnackbarClose}>
+      <MuiAlert onClose={handleSnackbarClose} severity="success" variant="filled">
+        Opération réussie !
+      </MuiAlert>
+    </Snackbar>
+  </Container>
+  
   );
 };
 

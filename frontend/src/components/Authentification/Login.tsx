@@ -15,7 +15,7 @@ import { useLoginMutation } from '../../api';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { MDBIcon, MDBInput, MDBBtn, MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage } from 'mdb-react-ui-kit';
-import { Typography } from '@mui/material';
+import { TextField, Typography } from '@mui/material';
 
 const Login: React.FC = () => {
   const [mail, setMail] = useState('');
@@ -48,14 +48,13 @@ const Login: React.FC = () => {
               <div className="d-flex flex-row align-items-center mb-4">
                 <MDBIcon fas icon="envelope me-3" size='lg' />
                 <div className="w-100">
-                  <MDBInput
+                  <TextField
                     label='Votre Email'
-                    id='form2'
-                    type='email'
+                    variant='outlined'
+                    fullWidth
                     value={mail}
                     onChange={(e) => setMail(e.target.value)}
-                    className="mb-0"
-                    style={{ border: '1px solid #ced4da' }} // Ajoutez la bordure ici
+                    style={{ marginBottom: '1rem' }}
                   />
                 </div>
               </div>
@@ -63,27 +62,24 @@ const Login: React.FC = () => {
               <div className="d-flex flex-row align-items-center mb-4">
                 <MDBIcon fas icon="lock me-3" size='lg' />
                 <div className="w-100">
-                  <MDBInput
+                  <TextField
                     label='Mot de passe'
-                    id='form3'
+                    variant='outlined'
+                    fullWidth
                     type='password'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="mb-0"
-                    style={{ border: '1px solid #ced4da' }} // Ajoutez la bordure ici
+                    style={{ marginBottom: '1rem' }}
                   />
                 </div>
               </div>
 
-
-
               <div className="d-flex justify-content-center">
-                <MDBBtn color='primary' size='lg' onClick={handleLogin}>
+                <Button variant='contained' color='primary' onClick={handleLogin} style={{  background : 'red' ,}}>
                   Se connecter
-                </MDBBtn>
+                </Button>
               </div>
             </MDBCol>
-
 
             <MDBCol md='10' lg='6' className='order-1 order-lg-2 d-flex align-items-center'>
               <MDBCardImage src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp' fluid />

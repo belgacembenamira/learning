@@ -61,83 +61,82 @@ const CreateCourse: React.FC = () => {
 
   return (
     <Container maxWidth="md" sx={{ marginTop: '2rem', backgroundColor: '#f4f4f4', padding: '2rem' }}>
-    <Card variant="outlined" sx={{ p: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Ajouter un cours
-      </Typography>
-      <form onSubmit={handleSubmit}>
+  <Card variant="outlined" sx={{ p: 4 }}>
+  <Typography variant="h4" gutterBottom style={{ color: 'red', textAlign: 'center' }}>
+     Ajouter  cours
+    </Typography>
+    <form onSubmit={handleSubmit}>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <TextField
+            label="Nom du cours"
+            fullWidth
+            name="name"
+            value={course.name}
+            onChange={handleChange}
+            variant="outlined" // Add this to use outlined style
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextareaAutosize
+            minRows={3}
+            placeholder="Description"
+            name="description"
+            value={course.description}
+            onChange={handleChange}
+            style={{ marginTop: '1rem', width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} // Custom styling for the textarea
+          />
+        </Grid>
         <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <TextField
-              label="Nom du cours"
-              fullWidth
-              name="name"
-              value={course.name}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextareaAutosize
-              minRows={3}
-              placeholder="Description"
-              name="description"
-              value={course.description}
-              onChange={handleChange}
-              style={{ marginTop: '1rem', width: '100%' }}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="URL de l'image"
-              fullWidth
-              name="image_url"
-              value={course.image_url}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Prix"
-              type="number"
-              fullWidth
-              name="price"
-              value={course.price}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Disponibilité"
-              fullWidth
-              name="availability"
-              value={course.availability}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="Instructeur"
-              fullWidth
-              name="instructor"
-              value={course.instructor}
-              onChange={handleChange}
-            />
-          </Grid>
-        </Grid>
-        <Grid item xs={12} sx={{ marginTop: '1rem' }}>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-          >
-            Ajouter
-          </Button>
-        </Grid>
-      </form>
-    </Card>
-  </Container>
-  
+  {/* ... (autres champs) */}
+  <Grid item xs={12}>
+    <TextField
+      label="Prix"
+      type="number"
+      fullWidth
+      name="price"
+      value={course.price}
+      onChange={handleChange}
+      variant="outlined" // Add this to use outlined style
+    />
+  </Grid>
+  <Grid item xs={12}>
+    <TextField
+      label="Disponibilité"
+      fullWidth
+      name="availability"
+      value={course.availability}
+      onChange={handleChange}
+      variant="outlined" // Add this to use outlined style
+    />
+  </Grid>
+  <Grid item xs={12}>
+    <TextField
+      label="Instructeur"
+      fullWidth
+      name="instructor"
+      value={course.instructor}
+      onChange={handleChange}
+      variant="outlined" // Add this to use outlined style
+    />
+  </Grid>
+  <Grid item xs={12} sx={{ marginTop: '1rem', textAlign: 'center' }}>
+    <Button
+      type="submit"
+      variant="contained"
+      color="primary"
+    >
+      Ajouter
+    </Button>
+  </Grid>
+</Grid>
+      </Grid>
+    </form>
+  </Card>
+</Container>
+
+
   );
-  }  
+}
 
 export default CreateCourse;

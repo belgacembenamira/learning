@@ -71,14 +71,14 @@ export default function UpdateCourse() {
   };
 
   return (
-    <div style={{ backgroundColor: '#b4c3d1', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
+    <div style={{ backgroundColor: '#e9edf0', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
 
       <Container maxWidth="sm" style={{ marginTop: '2rem' }}>
         <Card>
           <CardContent>
-            <Typography variant="h4" gutterBottom>
-              Modifier le cours
-            </Typography>
+          <Typography variant="h4" gutterBottom style={{ textAlign: 'center', color: '#2e7de6' }}>
+                Modifier le cours
+              </Typography>
             <form onSubmit={handleSubmit}>
               <TextField
                 fullWidth
@@ -112,15 +112,44 @@ export default function UpdateCourse() {
                 variant="outlined"
                 required
               />
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                style={{ marginTop: '1rem' }}
-              >
-                Mettre à jour
-              </Button>
+              {/* Ajoutez d'autres champs ici */}
+              <TextField
+                fullWidth
+                label="Prix"
+                name="price"
+                value={course.price}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+                required
+              />
+              <TextField
+                fullWidth
+                label="Disponibilité"
+                name="availability"
+                value={course.availability}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+                required
+              />
+              <div className="text-center mt-3">
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  sx={{
+                    marginTop: '1rem',
+                    display: 'block', // To center the button
+                    marginLeft: 'auto', // Center horizontally
+                    marginRight: 'auto', // Center horizontally
+                  }}
+                >
+                  Mettre à jour
+                </Button>
+                </div>
             </form>
+
           </CardContent>
         </Card>
       </Container>

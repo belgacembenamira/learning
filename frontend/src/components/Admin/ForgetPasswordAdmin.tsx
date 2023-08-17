@@ -13,6 +13,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'; // Import Link for navigation
+import { Box, Button, Container, TextField, Typography } from '@mui/material';
 
 const ForgetPasswordAdmin: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -29,28 +30,48 @@ const ForgetPasswordAdmin: React.FC = () => {
     };
 
     return (
-        <div className="container mt-5">
-            <h2>Admin Password Reset</h2>
-            <div className="mb-3">
-                <label htmlFor="email" className="form-label">
-                    Enter Admin Email:
-                </label>
-                <input
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-            </div>
-            <button className="btn btn-primary" onClick={handleResetPassword}>
-                Reset Password
-            </button>
-            {message && <p className="mt-3">{message}</p>}
-            <Link to="/loginAdmin" className="btn btn-secondary mt-3">
-                Back to Login
-            </Link>
-        </div>
+        <Container>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100vh',
+          }}
+        >
+          <Typography variant="h4" align="center" gutterBottom>
+            Admin Password Reset
+          </Typography>
+          <TextField
+            label="Enter Admin Email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleResetPassword}
+            fullWidth
+            sx={{ marginTop: '1rem' }}
+          >
+            Reset Password
+          </Button>
+          {message && (
+          <Typography variant="body1" sx={{ marginTop: '1rem' }}>
+            {message}
+          </Typography>
+        )}
+        <Link to="/loginAdmin">
+          <Typography variant="body1" sx={{ marginTop: '1rem' }}>
+            Back to Login
+          </Typography>
+        </Link>
+        </Box>
+      </Container>
     );
 };
 

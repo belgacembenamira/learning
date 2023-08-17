@@ -11,8 +11,10 @@
     * - Modification    : 
 **/
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Typography, TextField ,Container, Button } from '@mui/material';
+import { Box } from '@mui/system';
 
 const LoginAdmin: React.FC = () => {
   const [mail, setMail] = useState('');
@@ -41,39 +43,54 @@ const LoginAdmin: React.FC = () => {
   
 
   return (
-    <div className="container mt-5">
-      <h2>Admin Login</h2>
-      <div className="mb-3">
-        <label htmlFor="mail" className="form-label">
-          Email:
-        </label>
-        <input
-          type="email"
-          className="form-control"
-          id="mail"
-          value={mail}
-          onChange={(e) => setMail(e.target.value)}
-        />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="password" className="form-label">
-          Password:
-        </label>
-        <input
-          type="password"
-          className="form-control"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <button className="btn btn-primary me-2" onClick={handleLogin}>
+    <Container>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+      }}
+    >
+      <Typography variant="h4" align="center" gutterBottom>
+        Admin Login
+      </Typography>
+      <TextField
+        label="Email"
+        type="email"
+        value={mail}
+        onChange={(e) => setMail(e.target.value)}
+        fullWidth
+        margin="normal"
+      />
+      <TextField
+        label="Password"
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        fullWidth
+        margin="normal"
+      />
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleLogin}
+        fullWidth
+        sx={{ marginTop: '1rem' }}
+      >
         Login
-      </button>
-      <button className="btn btn-secondary" onClick={handleForgetPassword}>
+      </Button>
+      <Typography
+        variant="body2"
+        color="primary"
+        onClick={handleForgetPassword}
+        sx={{ marginTop: '1rem', cursor: 'pointer', textAlign: 'center' }}
+      >
         Forgot Password?
-      </button>
-    </div>
+      </Typography>
+    </Box>
+  </Container>
   );
 };
 

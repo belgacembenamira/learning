@@ -12,8 +12,13 @@
 **/
 
 import { useState } from "react";
-import { Container, Button ,Form } from "react-bootstrap";
-
+import {
+  Container,
+  TextField,
+  Button,
+  Typography,
+  Box,
+} from '@mui/material';
 const RegisterAdmin = () => {
 
   const [formData, setFormData] = useState({
@@ -36,55 +41,65 @@ const RegisterAdmin = () => {
     // Your registration logic here
   };
 
-  return (
+  return  (
     <Container>
-    <div className="d-flex justify-content-center mt-4">
-      <Form className="w-100" onSubmit={handleSubmit}>
-        <Form.Group className="mb-3">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="email"
-            name="mail"
-            value={formData.mail}
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Tlf</Form.Label>
-          <Form.Control
-            type="text"
-            name="tlf"
-            value={formData.tlf}
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
-        <Button type="submit" variant="primary" className="w-100">
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+      }}
+    >
+      <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+        <Typography variant="h4" align="center" gutterBottom>
+          Registration
+        </Typography>
+        <TextField
+          label="Email"
+          type="email"
+          name="mail"
+          value={formData.mail}
+          onChange={handleInputChange}
+          required
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Password"
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleInputChange}
+          required
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Name"
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleInputChange}
+          required
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Tlf"
+          type="text"
+          name="tlf"
+          value={formData.tlf}
+          onChange={handleInputChange}
+          required
+          fullWidth
+          margin="normal"
+        />
+        <Button type="submit" variant="contained" color="primary" fullWidth>
           Register
         </Button>
-      </Form>
-    </div>
+      </form>
+    </Box>
   </Container>
   );
 };
