@@ -115,7 +115,7 @@ const CourseDetail: React.FC = () => {
                 </Table>
               </TableContainer>
               <div className="text-center mt-3">
-                <Button
+                {/* <Button
                   variant="contained"
                   color="primary"
                   style={{
@@ -125,7 +125,7 @@ const CourseDetail: React.FC = () => {
                   }}
                 >
                   Add To Cart
-                </Button>
+                </Button> */}
                 <Button
                   variant="contained"
                   color="secondary"

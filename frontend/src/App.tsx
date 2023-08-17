@@ -42,6 +42,9 @@ import CommandeDetails from './components/Command/CommandeDetails';
 import Navbar from './page/Navbar';
 import RegisterProef from './components/Proef/RegisterProef';
 import LoginProef from './components/Proef/LoginProef';
+import RegisterAdmin from './components/Admin/RegisterAdmin';
+import ForgetPasswordAdmin from './components/Admin/ForgetPasswordAdmin';
+import LoginAdmin from './components/Admin/handleLoginAdmin';
 
 function App() {
   return (
@@ -74,6 +77,11 @@ function App() {
           <Route path="/create-admin" element={<CreateAdminForm />} />
           <Route path="/Admin-update/:id" element={<UpdateAdminForm />} />
           <Route path="/Admin-details/:id" element={<AdminDetail />} />
+          <Route path="/registerAdmin" element={<RegisterAdmin />} />
+          <Route path="/forget-password/" element={<ForgetPasswordAdmin/>} />
+          <Route path="/loginAdmin" element={<LoginAdmin/>} />
+
+          {/*********************commande ********* **/}
           <Route path="/commande" element={<CommandeForm />} />
           <Route path="/commande/:id" element={<CommandeUpdateForm />} />
           <Route path="/AllCommande" element={<CommandeList />} />

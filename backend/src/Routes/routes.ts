@@ -34,7 +34,10 @@ import {
   updateUserController,
 } from "../controllers/UserController";
 import { createProefController, deleteAllProefController, deleteProefController, getAllProefController, getProefByIdController, loginProefController, registerProef, updateProefController } from "../controllers/ProefController";
-import { getAllAdminsController, getAdminByIdController, createAdminController, updateAdminController, deleteAdminController } from "../controllers/AdminController";
+import { getAllAdminsController, getAdminByIdController, createAdminController,
+  
+   updateAdminController, deleteAdminController, registerAdmin, loginAdminController, forgetPassword,
+     } from "../controllers/AdminController";
 import { getAllCommandesController, getCommandeByIdController, updateCommandeController, deleteCommandeController, createCommandeController } from "../controllers/CommandeController";
 
 const router = Router();
@@ -74,6 +77,10 @@ router.get("/admins/:id", getAdminByIdController);
 router.post("/admins", createAdminController);
 router.put("/admins/:id", updateAdminController);
 router.delete("/admins/:id", deleteAdminController);
+router.post("/RegisterAdmin", registerAdmin);
+router.post("/LoginAdmin", loginAdminController);
+router.post("/forget-password", forgetPassword);
+
 /**********************command********** */
 router.get("/commandes", getAllCommandesController);
 router.get("/commandes/:id", getCommandeByIdController);

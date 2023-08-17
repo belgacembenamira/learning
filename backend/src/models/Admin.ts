@@ -18,6 +18,7 @@ export interface Admin {
   name: string;
   mail: string;
   tlf: string;
+  password :string;
 }
 
 const TABLE_NAME = 'admin';
@@ -33,7 +34,12 @@ export const getAdminById = async (id: number): Promise<Admin | null> => {
 
 export const createAdmin = async (admin: Admin): Promise<Admin> => {
   try {
-    const [createdAdmin] = await db(TABLE_NAME).insert(admin).returning('*');
+    const [createdAdmin] = await db(TABLE_NAME).insert({
+      mail: admin.mail,
+      password: admin.password,
+      name: admin.name,
+    tlf: admin.tlf,
+    }).returning('*');
     return createdAdmin;
   } catch (error) {
     throw error;
@@ -49,6 +55,47 @@ export const deleteAdmin = async (id: number): Promise<number> => {
   return db(TABLE_NAME).where('id', id).delete();
 };
 
-export function findUserByEmail(mail: any) {
-  throw new Error("Function not implemented.");
-}
+export const findAdminByEmail = async (email: string) => {
+  try {
+    const admin = await db(TABLE_NAME).where({ mail: email }).first();
+    return admin || null;
+  } catch (error) {
+    throw error;
+  }
+};
+export const clearAdminResetToken = async (mail: string) => {
+  try {
+    const test = await db(TABLE_NAME)
+      .where({ mail: mail }) 
+      // Make sure 'mail' is the correct column name
+      // .update({ resetToken: null }); // Supprimez cette ligne pour éviter l'erreur
+    console.log(test);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+
+// models/AdminModel.ts
+export const updateAdminPassword = async (mail: string, newPassword: string) => {
+  try {
+  const up =  await db(TABLE_NAME).where({ mail: mail }).update({ password: newPassword });
+ 
+console.log(up);
+} catch (error) {
+    throw error;
+  }
+};
+
+
+
+export const getAdminByEmail = async (email: string): Promise<Admin | null> => {
+  try {
+    const admin = await db<Admin>(TABLE_NAME).where({ mail: email }).first();
+    return admin || null;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
