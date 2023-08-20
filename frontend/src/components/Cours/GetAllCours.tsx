@@ -36,6 +36,7 @@ interface Course {
   price: number;
   availability: string;
   instructor: string;
+  category : string;
 }
 
 
@@ -133,6 +134,7 @@ const CourseList: React.FC = () => {
               <TableCell>Prix</TableCell>
               <TableCell>Disponibilité</TableCell>
               <TableCell>Instructeur</TableCell>
+              <TableCell>category</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -149,6 +151,7 @@ const CourseList: React.FC = () => {
                   <TableCell>${course.price}</TableCell>
                   <TableCell>{course.availability}</TableCell>
                   <TableCell>{course.instructor}</TableCell>
+                  <TableCell>{course.category}</TableCell>
                   <TableCell>
                     <div style={{ display: 'flex', gap: '8px' }}>
                       <Button

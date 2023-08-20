@@ -33,6 +33,7 @@ const CreateCourse: React.FC = () => {
     image_url: '',
     availability: '',
     instructor: '',
+    category : '',
   };
 
   const [course, setCourse] = useState(initialCourseState);
@@ -88,6 +89,18 @@ const CreateCourse: React.FC = () => {
           />
         </Grid>
         <Grid container spacing={3}>
+
+        <Grid item xs={12}>
+    <TextField
+      label="image_url"
+      type="string"
+      fullWidth
+      name="image_url"
+      value={course.image_url}
+      onChange={handleChange}
+      variant="outlined" // Add this to use outlined style
+    />
+  </Grid>
   {/* ... (autres champs) */}
   <Grid item xs={12}>
     <TextField
@@ -98,6 +111,17 @@ const CreateCourse: React.FC = () => {
       value={course.price}
       onChange={handleChange}
       variant="outlined" // Add this to use outlined style
+    />
+  </Grid>
+  <Grid item xs={12}>
+    <TextField
+      label="category"
+      type="text"
+      fullWidth
+      name="category"
+      value={course.category}
+      onChange={handleChange}
+      variant="outlined" 
     />
   </Grid>
   <Grid item xs={12}>
@@ -120,7 +144,7 @@ const CreateCourse: React.FC = () => {
       variant="outlined" // Add this to use outlined style
     />
   </Grid>
-  <Grid item xs={12} sx={{ marginTop: '1rem', textAlign: 'center' }}>
+  <Grid item xs={12} sx={{ marginTop: '100%', textAlign: 'center' }}>
     <Button
       type="submit"
       variant="contained"

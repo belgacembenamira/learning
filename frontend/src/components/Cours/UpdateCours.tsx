@@ -2,19 +2,19 @@
     * @description      : 
     * @author           : belgacem
     * @group            : 
-    * @created          : 12/08/2023 - 21:51:36
+    * @created          : 20/08/2023 - 22:18:11
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 12/08/2023
+    * - Date            : 20/08/2023
     * - Author          : belgacem
     * - Modification    : 
 **/
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { Container, Card, CardContent, Typography, TextField, Button } from '@mui/material';
-
+import { CardContent, Typography, TextField, CircularProgress } from "@mui/material";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { Container, Card, Button } from "react-bootstrap";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function UpdateCourse() {
   const { id } = useParams();
@@ -26,37 +26,44 @@ export default function UpdateCourse() {
     duration: '',
     difficulty: '',
     category: '',
-    prerequisites: [],
-    learningObjectives: [],
-    materials: [],
+    prerequisites: '',
+    learningObjectives: '',
+    materials: '',
     instructor: '',
     evaluationMethod: '',
     price: 0,
     availability: '',
-    certificates: false,
-    interactive: false,
+    certificates: false, // Utiliser des boolean ici
+    interactive: false, // Utiliser des boolean ici
     language: '',
     image_url: '',
+    lien_courses: '',
   });
+
+  const [isLoading, setIsLoading] = useState(true); // Ajout de l'état de chargement
 
   useEffect(() => {
     const fetchCourse = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/courses/${id}`);
         setCourse(response.data);
+        setIsLoading(false); // Mettre à jour l'état de chargement
       } catch (error) {
         console.error('Erreur lors de la récupération du cours :', error);
+        setIsLoading(false); // Mettre à jour l'état de chargement en cas d'erreur
       }
     };
 
     fetchCourse();
   }, [id]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
+  const handleChange = (e: any) => {
+    const { name, value, type, checked } = e.target;
+
+    // Utiliser checked pour les champs boolean
     setCourse((prevCourse) => ({
       ...prevCourse,
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
@@ -66,19 +73,18 @@ export default function UpdateCourse() {
       await axios.put(`http://localhost:5000/courses/${id}`, course);
       navigate(`/course-details/${id}`);
     } catch (error) {
+      console.log(error);
       console.error('Erreur lors de la mise à jour du cours :', error);
     }
   };
-
   return (
-    <div style={{ backgroundColor: '#e9edf0', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
-
-      <Container maxWidth="sm" style={{ marginTop: '2rem' }}>
-        <Card>
-          <CardContent>
-          <Typography variant="h4" gutterBottom style={{ textAlign: 'center', color: '#2e7de6' }}>
-                Modifier le cours
-              </Typography>
+    <Container>
+      <Card>
+        <CardContent>
+          <Typography variant="h4">Modifier le cours</Typography>
+          {isLoading ? (
+            <CircularProgress /> // Afficher un indicateur de chargement
+          ) : (
             <form onSubmit={handleSubmit}>
               <TextField
                 fullWidth
@@ -112,6 +118,36 @@ export default function UpdateCourse() {
                 variant="outlined"
                 required
               />
+              <TextField
+                fullWidth
+                label="image_url"
+                name="image_url"
+                value={course.image_url}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+                required
+              />
+              <TextField
+                fullWidth
+                label="lien_courses"
+                name="lien_courses"
+                value={course.lien_courses}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+                required
+              />
+              <TextField
+                fullWidth
+                label="category"
+                name="category"
+                value={course.category}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+                required
+              />
               {/* Ajoutez d'autres champs ici */}
               <TextField
                 fullWidth
@@ -138,7 +174,7 @@ export default function UpdateCourse() {
                   type="submit"
                   variant="contained"
                   color="primary"
-                  sx={{
+                  style={{
                     marginTop: '1rem',
                     display: 'block', // To center the button
                     marginLeft: 'auto', // Center horizontally
@@ -147,14 +183,13 @@ export default function UpdateCourse() {
                 >
                   Mettre à jour
                 </Button>
-                </div>
+              </div>
             </form>
+          )}
+        </CardContent>
+      </Card>
+    </Container>
 
-          </CardContent>
-        </Card>
-      </Container>
-
-    </div>
   );
 
 }

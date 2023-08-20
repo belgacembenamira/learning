@@ -29,6 +29,8 @@ export interface Course {
   certificates: boolean;
   interactive: boolean;
   language: string;
+  lien_courses : string;
+  image_url : string;
 }
 
 const TABLE_NAME = 'courses';
@@ -53,9 +55,21 @@ export const createCourse = async (course: Course): Promise<Course> => {
 };
 
 export const updateCourse = async (id: number, course: Course): Promise<Course | null> => {
-  const [updatedCourse] = await db(TABLE_NAME).where('id', id).update(course).returning('*');
-  return updatedCourse || null;
+  try {
+    const updatedRows = await db(TABLE_NAME).where('id', id).update(course);
+
+    if (updatedRows > 0) {
+      const updatedCourse = await db(TABLE_NAME).where('id', id).first();
+      return updatedCourse || null;
+    } else {
+      return null; // Aucune mise à jour effectuée, le cours n'a pas été trouvé
+    }
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour du cours :', error);
+    throw error; // Rejette l'erreur pour que la couche supérieure la gère
+  }
 };
+
 
 export const deleteCourse = async (id: number): Promise<number> => {
   return db(TABLE_NAME).where('id', id).delete();

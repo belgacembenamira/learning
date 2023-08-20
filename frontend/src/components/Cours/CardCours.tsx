@@ -59,9 +59,12 @@ function CardCours() {
                   width: '100%',
                   objectFit: 'cover',
                 }}
-                image={course.image_url}
+                src={course.image_url}
                 alt={course.name}
+                title={course.name} // Titre de l'image pour l'accessibilité
+                loading="lazy" // Chargement paresseux de l'image
               />
+
 
               <CardContent>
                 <Typography variant="h6" gutterBottom>
