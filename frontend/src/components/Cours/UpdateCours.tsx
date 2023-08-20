@@ -10,7 +10,7 @@
     * - Author          : belgacem
     * - Modification    : 
 **/
-import { CardContent, Typography, TextField, CircularProgress } from "@mui/material";
+import { CardContent, Typography, TextField, CircularProgress, Select, MenuItem, Grid, InputLabel } from "@mui/material";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Container, Card, Button } from "react-bootstrap";
@@ -19,6 +19,9 @@ import { useParams, useNavigate } from "react-router-dom";
 export default function UpdateCourse() {
   const { id } = useParams();
   const navigate = useNavigate();
+  interface Instructor {
+    name: string;
+  }
 
   const [course, setCourse] = useState({
     name: '',
@@ -41,6 +44,8 @@ export default function UpdateCourse() {
   });
 
   const [isLoading, setIsLoading] = useState(true); // Ajout de l'état de chargement
+  const [instructors, setInstructors] = useState<Instructor[]>([]);
+
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -56,6 +61,18 @@ export default function UpdateCourse() {
 
     fetchCourse();
   }, [id]);
+
+
+  useEffect(() => {
+    // Fetch the list of instructors from the API
+    axios.get('http://localhost:5000/proefs/')
+      .then(response => {
+        setInstructors(response.data);
+      })
+      .catch(error => {
+        console.error('Erreur lors de la récupération des instructeurs:', error);
+      });
+  }, []);
 
   const handleChange = (e: any) => {
     const { name, value, type, checked } = e.target;
@@ -169,6 +186,31 @@ export default function UpdateCourse() {
                 variant="outlined"
                 required
               />
+
+
+              <Grid item xs={12}>
+                <InputLabel htmlFor="instructor-select" sx={{ marginBottom: '0.5rem' }}>
+                  Sélectionner un instructeur
+                </InputLabel>
+                <Select
+                  fullWidth
+                  name="instructor"
+                  value={course.instructor}
+                  onChange={handleChange}
+                  variant="outlined"
+                  // Add style to align select field
+                  sx={{ marginBottom: '1rem' }}
+                  inputProps={{
+                    id: 'instructor-select',
+                  }}
+                >
+                  {instructors.map((instructor, index) => (
+                    <MenuItem key={index} value={instructor.name}>{instructor.name}</MenuItem>
+                  ))}
+                </Select>
+              </Grid>
+
+
               <div className="text-center mt-3">
                 <Button
                   type="submit"
