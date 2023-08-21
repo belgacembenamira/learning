@@ -64,8 +64,6 @@ router.get("/proefs", getAllProefController);
 router.get("/proefs/:id", getProefByIdController);
 router.post("/proefs", createProefController);
 router.delete("/proefs/", deleteAllProefController);
-
-/*** put lazema naselha *************** */
 router.put("/proefs/:id", updateProefController);
 router.delete("/proefs/:id", deleteProefController);
 router.post("/registerProef", registerProef);

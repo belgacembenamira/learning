@@ -37,6 +37,7 @@ const CreateCourse: React.FC = () => {
     availability: '',
     instructor: '',
     category: '',
+    lien_courses :'',
   };
   interface Instructor {
     name: string;
@@ -138,6 +139,17 @@ const CreateCourse: React.FC = () => {
                   fullWidth
                   name="category"
                   value={course.category}
+                  onChange={handleChange}
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="lien_courses"
+                  type="text"
+                  fullWidth
+                  name="lien_courses"
+                  value={course.lien_courses}
                   onChange={handleChange}
                   variant="outlined"
                 />

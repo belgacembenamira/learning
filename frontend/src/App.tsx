@@ -45,6 +45,8 @@ import LoginProef from './components/Proef/LoginProef';
 import RegisterAdmin from './components/Admin/RegisterAdmin';
 import ForgetPasswordAdmin from './components/Admin/ForgetPasswordAdmin';
 import LoginAdmin from './components/Admin/handleLoginAdmin';
+import InstructorCourses from './components/Cours/InstructorCourses';
+import PlayerCourse from './components/Cours/PlayerCourse';
 
 function App() {
   return (
@@ -59,6 +61,8 @@ function App() {
           {/* Define a route for the UpdateCourse component */}
           <Route path="/edit-course/:id" element={<UpdateCourse />} />
           <Route path="/course-details/:id" element={<CourseDetail />} />
+          <Route path="/instructor/:instructor" element={<InstructorCourses />} />
+
           {/* Define a route for the DeleteCourse component */}
           <Route path="/delete-course/:id" element={<DeleteCourse />} />
           <Route path="/create-course" element={<CreateCourse />} />
@@ -78,14 +82,23 @@ function App() {
           <Route path="/Admin-update/:id" element={<UpdateAdminForm />} />
           <Route path="/Admin-details/:id" element={<AdminDetail />} />
           <Route path="/registerAdmin" element={<RegisterAdmin />} />
-          <Route path="/forget-password/" element={<ForgetPasswordAdmin/>} />
-          <Route path="/loginAdmin" element={<LoginAdmin/>} />
+          <Route path="/forget-password/" element={<ForgetPasswordAdmin />} />
+          <Route path="/loginAdmin" element={<LoginAdmin />} />
 
           {/*********************commande ********* **/}
-          <Route path="/commande" element={<CommandeForm />} />
+          <Route path="/commande/:coursName" element={<CommandeForm />} />
+
           <Route path="/commande/:id" element={<CommandeUpdateForm />} />
           <Route path="/AllCommande" element={<CommandeList />} />
           <Route path="/commandes-details/:id/" element={<CommandeDetails />} />
+
+          {/* <Route
+            path="/player-course/:url"
+            element={({ params }: { params: { url: string } }) => (
+              <PlayerCourse url={params.url} />
+            )}
+          /> */}
+
 
 
 

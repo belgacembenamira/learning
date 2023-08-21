@@ -16,6 +16,8 @@ import { VerifyErrors } from "jsonwebtoken";
 import * as jwt from "jsonwebtoken";
 import * as nodemailer from "nodemailer";
 import * as bcrypt from "bcrypt";
+import * as CourseModel from '../models/Cours'
+import { error } from "console";
 export interface proef {
   id: number;
   name: string;
@@ -91,23 +93,57 @@ export const updateProefController = async (
   }
 };
 
+
 export const deleteProefController = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
     const id = parseInt(req.params.id, 10);
-    const deletedCount = await ProefModel.deleteProef(id);
-    if (deletedCount > 0) {
-      res.json({ message: "Proef deleted successfully" });
-    } else {
+
+    // Chercher le proef à supprimer
+    const proef = await ProefModel.getProefById(id);
+
+    if (!proef) {
       res.status(404).json({ error: "Proef not found" });
+      return;
+    }
+
+    // Supprimer les cours associés
+    const coursesToDelete = await CourseModel.getCoursesByInstructor(proef.name);
+    for (const course of coursesToDelete) {
+      await CourseModel.deleteCourse(course.id);
+    }
+
+    // Supprimer le proef lui-même
+    const deletedCount = await ProefModel.deleteProef(id);
+
+    if (deletedCount > 0) {
+      res.json({ message: "Proef and associated courses deleted successfully" });
+    } else {
+      res.status(404).json({ error: "Error while deleting proef" });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Error while deleting proef" });
+    res.status(500).json({ error: "Error while deleting proef and associated courses" + error });
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const SECRET_KEY = "secret-key 123 456 789";
 
 export const authenticateToken = (
@@ -263,6 +299,6 @@ export const deleteAllProefController = async (
     res.json({ message: `${deletedCount} admins deleted successfully.` });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Error while deleting all admins" });
+    res.status(500).json({ error: "Error while deleting all admins"  + error});
   }
 };

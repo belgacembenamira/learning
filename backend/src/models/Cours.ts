@@ -74,3 +74,8 @@ export const updateCourse = async (id: number, course: Course): Promise<Course |
 export const deleteCourse = async (id: number): Promise<number> => {
   return db(TABLE_NAME).where('id', id).delete();
 };
+
+
+export const getCoursesByInstructor = async (instructorName: string): Promise<Course[]> => {
+  return db('courses').where('instructor', instructorName).select();
+};

@@ -11,11 +11,13 @@
     * - Author          : belgacem
     * - Modification    : 
 **/
-import React, { useState }  from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { TextField, Typography, Paper, Grid } from '@mui/material';
 import { useNavigate, useNavigation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+
 
 const CommandeForm: React.FC = () => {
   const [commandeData, setCommandeData] = useState({
@@ -25,6 +27,7 @@ const CommandeForm: React.FC = () => {
     price: 0,
     name_cours: '',
   });
+  const { coursName } = useParams();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -36,16 +39,20 @@ const CommandeForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     try {
-      const response = await axios.post('http://localhost:5000/commandes/', commandeData);
+      const response = await axios.post('http://localhost:5000/commandes/', {
+        ...commandeData,
+        name_cours: coursName,
+      });
       console.log('Commande created:', response.data);
-      // navigte('/AllCommande')
+      // navigate('/AllCommande')
     } catch (error) {
       console.error('Error creating commande:', error);
       // Handle error
     }
   };
+  
 
   return (
     <Container>
@@ -58,13 +65,14 @@ const CommandeForm: React.FC = () => {
             <Grid item xs={6}>
               <TextField
                 fullWidth
-                label="Name Command"
-                name="name_command"
-                value={commandeData.name_command}
-                onChange={handleInputChange}
-                required
+                label="Name Cours"
+                name="name_cours"
+                value={coursName}
+                disabled // Empêche la modification de la valeur
                 variant="outlined"
+                style={{ marginTop: '1rem' }}
               />
+
             </Grid>
             <Grid item xs={6}>
               <TextField
@@ -113,13 +121,13 @@ const CommandeForm: React.FC = () => {
             variant="outlined"
             style={{ marginTop: '1rem' }}
           />
-        <Button
-                type="submit"
-                variant="contained"
-                style={{ marginTop: '1rem', backgroundColor: '#4CAF50', color: 'white' }} // Green color and centered style
-              >
-                Create Commande
-              </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            style={{ marginTop: '1rem', backgroundColor: '#4CAF50', color: 'white' }} // Green color and centered style
+          >
+            Create Commande
+          </Button>
         </Form>
       </Paper>
     </Container>
