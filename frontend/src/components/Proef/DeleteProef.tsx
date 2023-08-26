@@ -15,6 +15,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, ToastContentProps, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Typography , Container, Button } from '@mui/material';
 
 const DeleteProef = () => {
   const navigate = useNavigate();
@@ -55,17 +56,25 @@ const DeleteProef = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Supprimer le proef</h2>
-      <p>Êtes-vous sûr de vouloir supprimer ce proef ?</p>
-      <button className="btn btn-danger mr-2" onClick={handleDelete}>
-        Supprimer
-      </button>
-      <button className="btn btn-secondary" onClick={() => navigate('/proefs')}>
-        Annuler
-      </button>
-      <ToastContainer />
-    </div>
+    <Container maxWidth="sm" sx={{ marginTop: '2rem' ,  textAlign: 'center',}}>
+    <Typography variant="h4" align="center">
+      Supprimer le proef
+    </Typography>
+    <Typography variant="body1" align="center" sx={{ marginBottom: '2rem' }}>
+      Êtes-vous sûr de vouloir supprimer ce proef ?
+    </Typography>
+    <Button
+      variant="contained"
+      color="error"
+      onClick={handleDelete}
+      sx={{ marginRight: '1rem' ,  textAlign : 'center' , }}
+    >
+      Supprimer
+    </Button>
+    <Button variant="outlined" color="secondary" onClick={() => navigate('/proef')} style={ {textAlign: 'center',}}>
+      Annuler
+    </Button>
+  </Container>
   );
 };
 

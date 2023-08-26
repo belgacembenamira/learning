@@ -2,37 +2,49 @@
     * @description      : 
     * @author           : belgacem
     * @group            : 
-    * @created          : 12/08/2023 - 20:38:44
+    * @created          : 17/08/2023 - 12:10:45
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 12/08/2023
+    * - Date            : 17/08/2023
     * - Author          : belgacem
     * - Modification    : 
 **/
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import {
+  Container,
+  Typography,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Button,
+  TableContainer,
+  Paper,
+} from '@mui/material';
+import { Edit, Delete, Visibility } from '@mui/icons-material';
+import { ToastContainer, toast } from 'react-toastify'; // Import ToastContainer if needed
+import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 interface Course {
   id: number;
   name: string;
   description: string;
-  duration: string;
-  difficulty: string;
-  category: string;
   price: number;
   availability: string;
   instructor: string;
-  language: string;
-  // Add more properties if needed
+  category : string;
 }
 
-const GetAllCourses: React.FC = () => {
+
+
+
+
+const CourseList: React.FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -46,6 +58,14 @@ const GetAllCourses: React.FC = () => {
 
     fetchCourses();
   }, []);
+  const navigate = useNavigate();
+
+
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  const filteredCourses = courses.filter((course) =>
+    course.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleViewCourse = (course: Course) => {
     notifySuccess(`Voir le cours "${course.name}"`);
@@ -86,70 +106,103 @@ const GetAllCourses: React.FC = () => {
     });
   };
 
+
   return (
     <div>
-      <ToastContainer />
-      <div className="container">
-        <h1>Liste des cours</h1>
-        <div className="table-responsive">
-          <table className="table table-bordered">
-            <thead className="thead-dark">
-              <tr>
-                <th>Nom du cours</th>
-                <th>Description</th>
-                <th>Durée</th>
-                <th>Difficulté</th>
-                <th>Catégorie</th>
-                <th>Prix</th>
-                <th>Disponibilité</th>
-                <th>Instructeur</th>
-                <th>Langue</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {courses.map((course) => (
-                <tr key={course.id}>
-                  <td>{course.name}</td>
-                  <td>{course.description}</td>
-                  <td>{course.duration}</td>
-                  <td>{course.difficulty}</td>
-                  <td>{course.category}</td>
-                  <td>${course.price}</td>
-                  <td>{course.availability}</td>
-                  <td>{course.instructor}</td>
-                  <td>{course.language}</td>
-                  <td>
-                    <button
-                      className="btn btn-primary mr-2"
-                      onClick={() => handleViewCourse(course)}
-                    >
-                      Voir
-                    </button>
-                    <button
-                      className="btn btn-danger mr-2"
-                      onClick={() => handleDeleteCourse(course)}
-                    >
-                      Supprimer
-                    </button>
-                    <button
-                      className="btn btn-warning"
-                      onClick={() => handleEditCourse(course)}
-                    >
-                      Modifier
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <button className="btn btn-primary mb-3" onClick={handleCreateCourse}>
-          Créer un cours
-        </button>
+    <ToastContainer />
+    <Container maxWidth="lg" style={{ marginTop: '2rem', padding: '2rem' }}>
+      <Typography variant="h4" gutterBottom style={{ color: 'red', textAlign: 'center' }}>
+        Liste des cours
+      </Typography>
+  
+      <div style={{ marginBottom: '1rem', padding: '8px', textAlign: 'center' }}>
+        <input
+          type="text"
+          placeholder="Chercher par nom du cours"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          style={{ width: '100%', padding: '8px' }}
+        />
       </div>
-    </div>
+  
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Nom du cours</TableCell>
+              <TableCell>Description</TableCell>
+              <TableCell>Prix</TableCell>
+              <TableCell>Disponibilité</TableCell>
+              <TableCell>Instructeur</TableCell>
+              <TableCell>category</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {filteredCourses.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={6}>Aucun cours trouvé.</TableCell>
+              </TableRow>
+            ) : (
+              filteredCourses.map((course) => (
+                <TableRow key={course.id}>
+                  <TableCell>{course.name}</TableCell>
+                  <TableCell>{course.description}</TableCell>
+                  <TableCell>${course.price}</TableCell>
+                  <TableCell>{course.availability}</TableCell>
+                  <TableCell>{course.instructor}</TableCell>
+                  <TableCell>{course.category}</TableCell>
+                  <TableCell>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <Button
+                        className="action-button"
+                        variant="contained"
+                        color="primary"
+                        onClick={() => handleViewCourse(course)}
+                        startIcon={<Visibility />}
+                      >
+                        Voir
+                      </Button>
+                      <Button
+                        className="action-button"
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => handleDeleteCourse(course)}
+                        startIcon={<Delete />}
+                      >
+                        Supprimer
+                      </Button>
+                      <Button
+                        className="action-button"
+                        variant="contained"
+                        color="primary"
+                        onClick={() => handleEditCourse(course)}
+                        startIcon={<Edit />}
+                      >
+                        Modifier
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+  
+      <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleCreateCourse}
+        >
+          Créer un cours
+        </Button>
+      </div>
+    </Container>
+  </div>
+  
   );
 };
 
-export default GetAllCourses;
+export default CourseList;

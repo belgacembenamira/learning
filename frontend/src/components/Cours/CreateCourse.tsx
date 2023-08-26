@@ -2,48 +2,68 @@
     * @description      : 
     * @author           : belgacem
     * @group            : 
-    * @created          : 12/08/2023 - 21:20:41
+    * @created          : 15/08/2023 - 12:27:22
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 12/08/2023
+    * - Date            : 15/08/2023
     * - Author          : belgacem
     * - Modification    : 
 **/
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import {
+  Container,
+  Card,
+  TextField,
+  TextareaAutosize,
+  Button,
+  Grid,
+  Typography,
+  MenuItem,
+  Select,
+  InputLabel
+} from '@mui/material';
 
 const CreateCourse: React.FC = () => {
   const navigate = useNavigate();
 
-  interface Course {
-    availability: string | number |  string[] | undefined;
-    instructor: string | number |  string[] | undefined;
-    name: string;
-    description: string;
-    price: number;
-    image_url: string;
-  }
-
-  const initialCourseState: Course = {
+  const initialCourseState = {
     name: '',
     description: '',
     price: 0,
     image_url: '',
     availability: '',
     instructor: '',
+    category: '',
+    lien_courses :'',
   };
+  interface Instructor {
+    name: string;
+  }
 
-  const [course, setCourse] = useState<Course>(initialCourseState);
+  const [course, setCourse] = useState(initialCourseState);
+  const [instructors, setInstructors] = useState<Instructor[]>([]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | any) => {
     const { name, value } = e.target;
     setCourse((prevCourse) => ({
       ...prevCourse,
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    // Fetch the list of instructors from the API
+    axios.get('http://localhost:5000/proefs/')
+      .then(response => {
+        setInstructors(response.data);
+      })
+      .catch(error => {
+        console.error('Erreur lors de la récupération des instructeurs:', error);
+      });
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,7 +72,7 @@ const CreateCourse: React.FC = () => {
       if (response.status === 201) {
         navigate('/');
       } else {
-        console.error('Erreur lors de l\'ajout du cours:',);
+        console.error('Erreur lors de l\'ajout du cours:');
       }
     } catch (error) {
       console.error('Erreur lors de l\'ajout du cours:', error);
@@ -60,94 +80,130 @@ const CreateCourse: React.FC = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="card bg-light p-4">
-        <h1 className="mb-4">Ajouter un cours</h1>
+    <Container maxWidth="md" sx={{ marginTop: '2rem', backgroundColor: '#f4f4f4', padding: '2rem' }}>
+      <Card variant="outlined" sx={{ p: 4 }}>
+        <Typography variant="h4" gutterBottom style={{ color: 'red', textAlign: 'center' }}>
+          Ajouter  cours
+        </Typography>
         <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-            <label htmlFor="name" className="form-label">
-              Nom du cours:
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="name"
-              name="name"
-              value={course.name}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="description" className="form-label">
-              Description:
-            </label>
-            <textarea
-              className="form-control"
-              id="description"
-              name="description"
-              value={course.description}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="image_url" className="form-label">
-              URL de l'image:
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="image_url"
-              name="image_url"
-              value={course.image_url}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="price" className="form-label">
-              Prix:
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              id="price"
-              name="price"
-              value={course.price}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="availability" className="form-label">
-              Disponibilité:
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="availability"
-              name="availability"
-              value={course.availability}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="instructor" className="form-label">
-              Instructeur:
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="instructor"
-              name="instructor"
-              value={course.instructor}
-              onChange={handleChange}
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Ajouter
-          </button>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <TextField
+                label="Nom du cours"
+                fullWidth
+                name="name"
+                value={course.name}
+                onChange={handleChange}
+                variant="outlined" // Add this to use outlined style
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextareaAutosize
+                minRows={3}
+                placeholder="Description"
+                name="description"
+                value={course.description}
+                onChange={handleChange}
+                style={{ marginTop: '1rem', width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} // Custom styling for the textarea
+              />
+            </Grid>
+            <Grid container spacing={3}>
+
+              <Grid item xs={12}>
+                <TextField
+                  label="image_url"
+                  type="string"
+                  fullWidth
+                  name="image_url"
+                  value={course.image_url}
+                  onChange={handleChange}
+                  variant="outlined" // Add this to use outlined style
+                />
+              </Grid>
+              {/* ... (autres champs) */}
+              <Grid item xs={12}>
+                <TextField
+                  label="Prix"
+                  type="number"
+                  fullWidth
+                  name="price"
+                  value={course.price}
+                  onChange={handleChange}
+                  variant="outlined" // Add this to use outlined style
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="category"
+                  type="text"
+                  fullWidth
+                  name="category"
+                  value={course.category}
+                  onChange={handleChange}
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="lien_courses"
+                  type="text"
+                  fullWidth
+                  name="lien_courses"
+                  value={course.lien_courses}
+                  onChange={handleChange}
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="Disponibilité"
+                  fullWidth
+                  name="availability"
+                  value={course.availability}
+                  onChange={handleChange}
+                  variant="outlined" // Add this to use outlined style
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <InputLabel htmlFor="instructor-select" sx={{ marginBottom: '0.5rem' }}>
+                  Sélectionner un instructeur
+                </InputLabel>
+                <Select
+                  fullWidth
+                  name="instructor"
+                  value={course.instructor}
+                  onChange={handleChange}
+                  variant="outlined"
+                  // Add style to align select field
+                  sx={{ marginBottom: '1rem' }}
+                  inputProps={{
+                    id: 'instructor-select',
+                  }}
+                >
+                  {instructors.map((instructor, index) => (
+                    <MenuItem key={index} value={instructor.name}>{instructor.name}</MenuItem>
+                  ))}
+                </Select>
+              </Grid>
+              <Grid item xs={12} sx={{ textAlign: 'center' }}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  // Add style to center the button
+                  sx={{ marginTop: '1rem' }}
+                >
+                  Ajouter
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>
         </form>
-      </div>
-    </div>
+      </Card>
+    </Container>
+
+
   );
-};
+}
 
 export default CreateCourse;

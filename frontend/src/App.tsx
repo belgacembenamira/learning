@@ -37,14 +37,22 @@ import CreateAdminForm from './components/Admin/CreateAdminForm';
 import AdminDetail from './components/Admin/AdminDetail';
 import CommandeForm from './components/Command/CommandeForm';
 import CommandeList from './components/Command/CommandeList';
-import { updateCommande } from '../../backend/src/models/Commande';
 import CommandeUpdateForm from './components/Command/CommandeUpdateForm';
 import CommandeDetails from './components/Command/CommandeDetails';
-  
+import Navbar from './page/Navbar';
+import RegisterProef from './components/Proef/RegisterProef';
+import LoginProef from './components/Proef/LoginProef';
+import RegisterAdmin from './components/Admin/RegisterAdmin';
+import ForgetPasswordAdmin from './components/Admin/ForgetPasswordAdmin';
+import LoginAdmin from './components/Admin/handleLoginAdmin';
+import InstructorCourses from './components/Cours/InstructorCourses';
+import PlayerCourse from './components/Cours/PlayerCourse';
+
 function App() {
   return (
     <Provider store={store}>
       <div className="App">
+        <Navbar />
         <Routes>
           {/* Define your routes */}
           {/* Define a route for the GetAllCours component */}
@@ -53,6 +61,8 @@ function App() {
           {/* Define a route for the UpdateCourse component */}
           <Route path="/edit-course/:id" element={<UpdateCourse />} />
           <Route path="/course-details/:id" element={<CourseDetail />} />
+          <Route path="/instructor/:instructor" element={<InstructorCourses />} />
+
           {/* Define a route for the DeleteCourse component */}
           <Route path="/delete-course/:id" element={<DeleteCourse />} />
           <Route path="/create-course" element={<CreateCourse />} />
@@ -61,24 +71,40 @@ function App() {
           {/*********Proef******************* */}
           <Route path="/Proef" element={<GetAllProef />} />
           <Route path="/proef-details/:id" element={<GetProef />} />
-          <Route path="/create-proef" element={<CreateProefForm/>} />
+          <Route path="/create-proef" element={<CreateProefForm />} />
           <Route path="/edit-proef/:id" element={<UpdateProefForm />} />
           <Route path="/delete-proef/:id" element={<DeleteProef />} />
-         { /******************Admin********************************** */}
-         <Route path="/Admin" element={<AdminList />} />
-         <Route path="/create-admin" element={<CreateAdminForm />} />
-         <Route path="/Admin-update/:id" element={<UpdateAdminForm  />} />
-         <Route path="/Admin-details/:id" element={<AdminDetail  />} />
-         <Route path="/commande" element={<CommandeForm />} />
-         <Route path="/commande/:id" element={<CommandeUpdateForm  />} />
-         <Route path="/AllCommande" element={<CommandeList />} />
-         <Route path="/commandes-details/:id/" element={<CommandeDetails />} />
+          <Route path="/RegisterProef" element={<RegisterProef />} />
+          <Route path="/loginProef" element={<LoginProef />} />
+          { /******************Admin********************************** */}
+          <Route path="/Admin" element={<AdminList />} />
+          <Route path="/create-admin" element={<CreateAdminForm />} />
+          <Route path="/Admin-update/:id" element={<UpdateAdminForm />} />
+          <Route path="/Admin-details/:id" element={<AdminDetail />} />
+          <Route path="/registerAdmin" element={<RegisterAdmin />} />
+          <Route path="/forget-password/" element={<ForgetPasswordAdmin />} />
+          <Route path="/loginAdmin" element={<LoginAdmin />} />
+
+          {/*********************commande ********* **/}
+          <Route path="/commande/:coursName" element={<CommandeForm />} />
+
+          <Route path="/commande/:id" element={<CommandeUpdateForm />} />
+          <Route path="/AllCommande" element={<CommandeList />} />
+          <Route path="/commandes-details/:id/" element={<CommandeDetails />} />
+
+          {/* <Route
+            path="/player-course/:url"
+            element={({ params }: { params: { url: string } }) => (
+              <PlayerCourse url={params.url} />
+            )}
+          /> */}
 
 
 
 
-       
-       
+
+
+
 
 
 

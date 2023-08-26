@@ -2,29 +2,28 @@
     * @description      : 
     * @author           : belgacem
     * @group            : 
-    * @created          : 12/08/2023 - 20:24:08
+    * @created          : 15/08/2023 - 12:30:37
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 12/08/2023
+    * - Date            : 15/08/2023
     * - Author          : belgacem
     * - Modification    : 
 **/
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
+import { Card, CardContent, CardMedia, Typography, Button, Grid } from '@mui/material';
 
 interface Course {
   id: number;
   name: string;
   description: string;
   price: number;
-  image_url: string; // Use "image_url" to match the API response
+  image_url: string;
 }
 
-export default function CardCours() {
+function CardCours() {
   const [courses, setCourses] = useState<Course[]>([]);
 
   useEffect(() => {
@@ -40,52 +39,59 @@ export default function CardCours() {
     // Call the function to perform the GET request during the initial render
     fetchCourses();
   }, []);
+
   const navigate = useNavigate();
+
   const handleViewDetails = (id: number) => {
     navigate(`/course-details/${id}`);
   };
 
   return (
     <div className="container">
-      <div className="row">
+      <Grid container spacing={3}>
         {courses.map((course) => (
-          <div key={course.id} className="col-md-4 mb-4">
-            <Card style={{ height: '100%' }}>
-              <div style={{ height: '250px', overflow: 'hidden' }}>
-                <Card.Img
-                  variant="top"
-                  src={course.image_url}
-                  alt={course.name}
-                  style={{ objectFit: 'cover', height: '100%', width: '100%' }}
-                />
-              </div>
-              <Card.Body>
-                <Card.Title className="mb-2">
-                  <strong>Nom du cours:</strong> {course.name}
-                </Card.Title>
-                <Card.Text className="mb-3">
-                  <strong>Description:</strong> {course.description}
-                </Card.Text>
-                <div className="d-flex justify-content-between align-items-center">
-                  <div>
-                    <span className="font-weight-bold">Prix:</span> {course.price} $
-                  </div>
+          <Grid key={course.id} item xs={12} md={4}>
+            <Card>
+              <CardMedia
+                component="img"
+                style={{
+                  maxHeight: '100%',
+                  width: '100%',
+                  objectFit: 'cover',
+                }}
+                src={course.image_url}
+                alt={course.name}
+                title={course.name} // Titre de l'image pour l'accessibilité
+                loading="lazy" // Chargement paresseux de l'image
+              />
+
+
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
+                  {course.name}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {course.description}
+                </Typography>
+                <div style={{ marginTop: '1rem' }}>
+                  <Typography variant="subtitle1" color="primary">
+                    Prix: {course.price} $
+                  </Typography>
                   <Button
-                    variant="primary"
+                    variant="contained"
+                    color="primary"
                     onClick={() => handleViewDetails(course.id)} // Call the function with course ID
+                    style={{ marginTop: '0.5rem' }}
                   >
                     Voir les détails
                   </Button>
                 </div>
-              </Card.Body>
-              
-
+              </CardContent>
             </Card>
-          </div>
+          </Grid>
         ))}
-      </div>
+      </Grid>
     </div>
   );
-
 }
-
+export default CardCours;

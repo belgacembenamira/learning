@@ -81,11 +81,11 @@ const UpdateAdminForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label>Tlf</label>
+                    <label>numero_tlf</label>
                     <input
                         type="text"
                         className="form-control"
-                        name="tlf"
+                        name="numero_tlf"
                         value={updatedAdmin?.tlf || ''}
                         onChange={handleInputChange}
                         required

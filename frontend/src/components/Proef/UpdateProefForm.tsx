@@ -10,6 +10,7 @@
     * - Author          : belgacem
     * - Modification    : 
 **/
+import { Button, Container, TextField } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -70,58 +71,66 @@ const UpdateProefForm = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Modifier le proef</h2>
+    <Container maxWidth="sm" sx={{ marginTop: '2rem' ,  textAlign: 'center',}}>
+      <h2 style={{ textAlign: 'center' }}>
+        Modifier le proef</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Nom</label>
-          <input
-            type="text"
-            className="form-control"
-            name="name"
-            value={proefData.name}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Matricule</label>
-          <input
-            type="text"
-            className="form-control"
-            name="matricule"
-            value={proefData.matricule}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Mail</label>
-          <input
-            type="email"
-            className="form-control"
-            name="mail"
-            value={proefData.mail}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Numéro de téléphone</label>
-          <input
-            type="text"
-            className="form-control"
-            name="numero_tlf"
-            value={proefData.numero_tlf}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">
+        <TextField
+          label="Nom"
+          fullWidth
+          name="name"
+          value={proefData.name}
+          onChange={handleInputChange}
+          variant="outlined"
+          margin="normal"
+          required
+        />
+        <TextField
+          label="Matricule"
+          fullWidth
+          name="matricule"
+          value={proefData.matricule}
+          onChange={handleInputChange}
+          variant="outlined"
+          margin="normal"
+          required
+        />
+        <TextField
+          label="Mail"
+          fullWidth
+          name="mail"
+          value={proefData.mail}
+          onChange={handleInputChange}
+          variant="outlined"
+          margin="normal"
+          required
+        />
+        <TextField
+          label="Numéro de téléphone"
+          fullWidth
+          name="numero_tlf"
+          value={proefData.numero_tlf}
+          onChange={handleInputChange}
+          variant="outlined"
+          margin="normal"
+          required
+        />
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          sx={{
+            marginTop: '5rem',
+            display: 'flex',
+            justifyContent: 'center',
+            textAlign: 'center',
+          }}
+        >
           Enregistrer les modifications
-        </button>
+        </Button>
+
       </form>
-    </div>
+    </Container>
   );
 };
 

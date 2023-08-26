@@ -10,7 +10,9 @@
     * - Author          : belgacem
     * - Modification    : 
 **/
+import { CardContent, TextField, Container, Card, Button } from '@mui/material';
 import React, { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
 const CreateProefForm = () => {
@@ -55,66 +57,68 @@ const CreateProefForm = () => {
   };
 
   return (
-    <div className="container mt-5">
-  <div className="row justify-content-center">
-    <div className="col-md-6">
-      <div className="card">
-        <div className="card-body">
-          <h2 className="card-title">Créer un proef</h2>
+    <div style={{ background: 'linear-gradient(to bottom, #f0f4f8, #e1e6ea)' }}>
+    <Container maxWidth="md" style={{ paddingTop: '2rem' }}>
+      <Card>
+        <CardContent>
+          <h2 style={{ marginBottom: '1rem'  , textAlign: 'center'}}>
+            Créer un proef</h2>
           <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>Nom</label>
-              <input
-                type="text"
-                className="form-control"
-                name="name"
-                value={proefData.name}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Matricule</label>
-              <input
-                type="text"
-                className="form-control"
-                name="matricule"
-                value={proefData.matricule}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Mail</label>
-              <input
-                type="email"
-                className="form-control"
-                name="mail"
-                value={proefData.mail}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Numéro de téléphone</label>
-              <input
-                type="text"
-                className="form-control"
-                name="numero_tlf"
-                value={proefData.numero_tlf}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <button type="submit" className="btn btn-primary">
+            <TextField
+              fullWidth
+              label="Nom"
+              name="name"
+              value={proefData.name}
+              onChange={handleInputChange}
+              required
+              margin="normal"
+              variant="outlined"
+            />
+            <TextField
+              fullWidth
+              label="Matricule"
+              name="matricule"
+              value={proefData.matricule}
+              onChange={handleInputChange}
+              required
+              margin="normal"
+              variant="outlined"
+            />
+            <TextField
+              fullWidth
+              label="Mail"
+              name="mail"
+              value={proefData.mail}
+              onChange={handleInputChange}
+              required
+              margin="normal"
+              variant="outlined"
+            />
+            <TextField
+              fullWidth
+              label="Numéro de téléphone"
+              name="numero_tlf"
+              value={proefData.numero_tlf}
+              onChange={handleInputChange}
+              required
+              margin="normal"
+              variant="outlined"
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              style={{ marginTop: '1rem', textAlign: 'center' }}
+
+            >
               Créer Proef
-            </button>
+            </Button>
           </form>
-        </div>
-      </div>
-    </div>
+        </CardContent>
+      </Card>
+    </Container>
   </div>
-</div>
+
 
   );
 };

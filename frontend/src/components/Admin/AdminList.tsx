@@ -2,58 +2,102 @@
     * @description      : 
     * @author           : belgacem
     * @group            : 
-    * @created          : 14/08/2023 - 10:16:18
+    * @created          : 15/08/2023 - 15:57:57
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 14/08/2023
+    * - Date            : 15/08/2023
     * - Author          : belgacem
     * - Modification    : 
 **/
 import React from 'react';
+import { Container, Typography, Table, TableHead, TableRow, TableCell, TableBody, IconButton, CircularProgress, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom'; // Import useHistory for navigation
 import { useGetAllAdminsQuery } from '../../api/adminApi';
+import { Edit, Delete } from '@mui/icons-material';
 
-
-
-const AdminList = () => {
+const AdminList: React.FC = () => {
   const { data: admins, error, isLoading } = useGetAllAdminsQuery();
+  const navigate = useNavigate(); // Initialize the hook
+
+  const handleCreateAdmin = () => {
+    navigate('/create-admin');
+  };
+
+  const handleEditAdmin = (id: number) => {
+    navigate(`/Admin-update/${id}`);
+  };
+
+  const handleViewAdmin = (id: number) => {
+    navigate(`/Admin-details/${id}`);
+  };
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <Container maxWidth="md" style={{ marginTop: '5rem' }}>
+        <p>Loading...</p>
+      </Container>
+    );
   }
 
   if (error) {
     console.log(error);
+    return (
+      <Container maxWidth="md" style={{ marginTop: '5rem' }}>
+        <p>Error loading admins</p>
+      </Container>
+    );
   }
 
   return (
-    <div className="container mt-5">
-      <h1 className="mb-4">List of Admins</h1>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Mail</th>
-            <th>Tlf</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {admins &&
-            admins.map((admin) => (
-              <tr key={admin.id}>
-                <td>{admin.name}</td>
-                <td>{admin.mail}</td>
-                <td>{admin.tlf}</td>
-                <td>
-                  <button className="btn btn-primary btn-sm mr-2">Edit</button>
-                  <button className="btn btn-danger btn-sm">Delete</button>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
-    </div>
+    <Container maxWidth="md" style={{ marginTop: '2rem', background: '#f4f4f4', padding: '2rem' }}>
+      <Typography variant="h4" gutterBottom>
+        List of Admins
+      </Typography>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell>Mail</TableCell>
+            <TableCell>numero_tlf</TableCell>
+            <TableCell>Actions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {admins?.map((admin) => (
+            <TableRow key={admin.id}>
+              <TableCell>{admin.name}</TableCell>
+              <TableCell>{admin.mail}</TableCell>
+              <TableCell>{admin.tlf}</TableCell>
+              <TableCell>
+                <IconButton
+                  color="primary"
+                  aria-label="Edit"
+                  onClick={() => handleEditAdmin(admin.id)}
+                >
+                  <Edit />
+                </IconButton>
+                <IconButton
+                  color="secondary"
+                  aria-label="Delete"
+                  onClick={() => handleViewAdmin(admin.id)}
+                >
+                  <Delete />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleCreateAdmin}
+        style={{ marginTop: '1rem' }}
+      >
+        Create Admin
+      </Button>
+    </Container>
   );
 };
 

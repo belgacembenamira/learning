@@ -14,6 +14,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetAdminByIdQuery, useDeleteAdminMutation } from '../../api/adminApi';
+import { Button, CircularProgress, Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Delete } from '@mui/icons-material';
 
 const AdminDetail: React.FC = () => {
     const { id } = useParams<{ id?: string }>();
@@ -47,25 +49,48 @@ const { data: admin, error, isLoading } = adminId !== undefined ? useGetAdminByI
     }
 
     return (
-        <div className="container mt-5">
-            <h2>Admin Detail</h2>
-            {admin ? (
-                <div>
-                    <p>Name: {admin.name}</p>
-                    <p>Mail: {admin.mail}</p>
-                    <p>Tlf: {admin.tlf}</p>
-                    <button
-                        className="btn btn-danger"
-                        onClick={handleDelete}
-                        disabled={isDeleting}
-                    >
-                        {isDeleting ? 'Deleting...' : 'Delete Admin'}
-                    </button>
-                </div>
-            ) : (
-                <p>No admin data available.</p>
-            )}
-        </div>
+        <Container maxWidth="md" style={{ marginTop: '5rem', textAlign: 'center' }}>
+
+        <TableContainer>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <h1> { "Welcome to      "+ admin?.name + " Details  "}</h1>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell>{admin?.name}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Mail</TableCell>
+            <TableCell>{admin?.mail}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>tlf</TableCell>
+            <TableCell>{admin?.tlf}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Actions</TableCell>
+            <TableCell>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleDelete}
+                disabled={isDeleting}
+                startIcon={
+                  isDeleting ? <CircularProgress size={20} /> : <Delete />
+                }
+              >
+                {isDeleting ? 'Deleting...' : 'Delete Admin'}
+              </Button>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
+  </Container>
 
     );
 };

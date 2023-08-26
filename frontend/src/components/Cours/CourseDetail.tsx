@@ -2,18 +2,19 @@
     * @description      : 
     * @author           : belgacem
     * @group            : 
-    * @created          : 12/08/2023 - 20:32:43
+    * @created          : 15/08/2023 - 12:05:09
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 12/08/2023
+    * - Date            : 15/08/2023
     * - Author          : belgacem
     * - Modification    : 
 **/
+import { Grid, CardMedia, CardContent, Typography, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Card, Button, Col, Row, Table } from 'react-bootstrap';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 
-// Interface to represent the type of the 'course' prop
 interface Course {
   id: number;
   name: string;
@@ -25,12 +26,11 @@ interface Course {
   availability: string;
   instructor: string;
   language: string;
-  image_url: string; // Add the image_url property
-  // Add more properties if needed
+  image_url: string;
 }
 
 const CourseDetail: React.FC = () => {
-  const { id } = useParams(); // Get the course ID from the URL parameter
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [course, setCourse] = useState<Course | null>(null);
@@ -54,48 +54,108 @@ const CourseDetail: React.FC = () => {
   }, [id]);
 
   if (!course) {
-    return <div>Loading...</div>; // Add a loading state while fetching the data
+    return <div>Loading...</div>;
   }
 
+
   return (
-    <div className="bg-light py-5">
-      <div className="container mt-5">
-        <div className="row">
-          <div className="col-md-8">
-            <div className="card p-4">
-              <h1>{course.name}</h1>
-              <p className="lead">{course.description}</p>
-              <p><strong>Duration:</strong> {course.duration}</p>
-              <p><strong>Difficulty:</strong> {course.difficulty}</p>
-              <p><strong>Category:</strong> {course.category}</p>
-              <p><strong>Price:</strong> ${course.price}</p>
-              <p><strong>Availability:</strong> {course.availability}</p>
-              {/* Add more course details here as needed */}
-            </div>
-          </div>
-          <div className="col-md-4">
-            <div className="card">
-              <img
-                src={course.image_url} // Use the image_url from the API
-                className="card-img-top"
-                alt={course.name}
-              />
-              <div className="card-body">
-                <h5 className="card-title"><strong>Instructor:</strong> {course.instructor}</h5>
-                <p className="card-text"><strong>Language:</strong> {course.language}</p>
-                {/* Add more instructor details or other course-related information */}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="container my-5">
+      <Grid container justifyContent="center">
+        <Grid item xs={12} lg={8}>
+          <Card style={{ margin: '1rem', padding: '1rem' }}>
+            <Row>
+              <Col xs={12} md={6}>
+                <CardMedia
+                  component="img"
+                  src={course.image_url}
+                  alt={course.name}
+                  style={{ maxHeight: '100%', width: '100%', objectFit: 'cover' }}
+                />
+              </Col>
+              <Col xs={12} md={6}>
+                <CardContent>
+                  <Typography variant="h5" component="h2" gutterBottom>
+                    {course.name}
+                  </Typography>
+                  <Typography variant="body1" gutterBottom>
+                    {course.description}
+                  </Typography>
+                  <TableContainer>
+                    <Table>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell><strong>Duration:</strong></TableCell>
+                          <TableCell>{course.duration}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><strong>Difficulty:</strong></TableCell>
+                          <TableCell>{course.difficulty}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><strong>Category:</strong></TableCell>
+                          <TableCell>{course.category}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><strong>Price:</strong></TableCell>
+                          <TableCell>${course.price}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><strong>Instructor:</strong></TableCell>
+                          <TableCell>
+                            <Link to={`/instructor/${course.instructor}`}>
+                              {course.instructor}
+                            </Link>
+                          </TableCell>
+                        </TableRow>
+
+                        <TableRow>
+                          <TableCell><strong>Language:</strong></TableCell>
+                          <TableCell>{course.language}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><strong>Availability:</strong></TableCell>
+                          <TableCell>{course.availability}</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                  <div className="text-center mt-3">
+                    {/* <Button
+                  variant="contained"
+                  color="primary"
+                  style={{
+                    marginRight: '8px',
+                    backgroundColor: '#007bff', // Custom primary color
+                    color: '#fff', // Text color
+                  }}
+                >
+                  Add To Cart
+                </Button> */}
+                    <Link to={`/commande/${encodeURIComponent(course.name)}`} style={{ textDecoration: 'none' }}>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        style={{
+                          marginLeft: '8px',
+                          backgroundColor: '#dc3545', // Custom secondary color
+                          color: '#fff', // Text color
+                        }}
+                      >
+                        Shop Now
+                      </Button>
+                    </Link>
+
+                  </div>
+                </CardContent>
+              </Col>
+            </Row>
+          </Card>
+        </Grid>
+      </Grid>
     </div>
+
+
   );
 };
 
-
-
-
-
 export default CourseDetail;
-
