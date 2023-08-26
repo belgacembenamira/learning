@@ -75,7 +75,6 @@ export const createCourseController = async (req: Request, res: Response): Promi
     res.status(500).json({ message: 'Failed to create course.', error: error });
   }
 };
-
 export const updateCourseController = async (req: Request, res: Response): Promise<void> => {
   const id = parseInt(req.params.id, 10);
   if (isNaN(id)) {
@@ -92,6 +91,7 @@ export const updateCourseController = async (req: Request, res: Response): Promi
 
   try {
     const updatedCourse = await updateCourse(id, course);
+
     if (updatedCourse) {
       res.status(200).json(updatedCourse);
     } else {
@@ -101,6 +101,8 @@ export const updateCourseController = async (req: Request, res: Response): Promi
     res.status(500).json({ message: 'Failed to update course.', error });
   }
 };
+
+
 
 export const deleteCourseController = async (req: Request, res: Response): Promise<void> => {
   const id = parseInt(req.params.id, 10);

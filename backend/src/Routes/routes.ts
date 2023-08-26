@@ -33,8 +33,11 @@ import {
   
   updateUserController,
 } from "../controllers/UserController";
-import { createProefController, deleteProefController, getAllProefController, getProefByIdController, updateProefController } from "../controllers/ProefController";
-import { getAllAdminsController, getAdminByIdController, createAdminController, updateAdminController, deleteAdminController } from "../controllers/AdminController";
+import { createProefController, deleteAllProefController, deleteProefController, getAllProefController, getProefByIdController, loginProefController, registerProef, updateProefController } from "../controllers/ProefController";
+import { getAllAdminsController, getAdminByIdController, createAdminController,
+  
+   updateAdminController, deleteAdminController, registerAdmin, loginAdminController, forgetPassword,
+     } from "../controllers/AdminController";
 import { getAllCommandesController, getCommandeByIdController, updateCommandeController, deleteCommandeController, createCommandeController } from "../controllers/CommandeController";
 
 const router = Router();
@@ -60,15 +63,22 @@ router.delete("/users/:id", deleteUserController);
 router.get("/proefs", getAllProefController);
 router.get("/proefs/:id", getProefByIdController);
 router.post("/proefs", createProefController);
-/*** put lazema naselha *************** */
+router.delete("/proefs/", deleteAllProefController);
 router.put("/proefs/:id", updateProefController);
 router.delete("/proefs/:id", deleteProefController);
+router.post("/registerProef", registerProef);
+router.post("/loginProef", loginProefController);
+
 /*************************Admin ************ */
 router.get("/admins", getAllAdminsController);
 router.get("/admins/:id", getAdminByIdController);
 router.post("/admins", createAdminController);
 router.put("/admins/:id", updateAdminController);
 router.delete("/admins/:id", deleteAdminController);
+router.post("/RegisterAdmin", registerAdmin);
+router.post("/LoginAdmin", loginAdminController);
+router.post("/forget-password", forgetPassword);
+
 /**********************command********** */
 router.get("/commandes", getAllCommandesController);
 router.get("/commandes/:id", getCommandeByIdController);

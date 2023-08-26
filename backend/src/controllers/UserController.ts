@@ -17,10 +17,10 @@ import * as jwt from "jsonwebtoken";
 import * as bcrypt from "bcrypt";
 import { VerifyErrors } from "jsonwebtoken";
 import { mainModule } from "process";
-import * as nodemailer from 'nodemailer';
+import * as nodemailer from "nodemailer";
 
 import { error } from "console";
-import { User } from '../models/User';
+import { User } from "../models/User";
 const SECRET_KEY = "secret-key 123 456 789";
 export const getAllUsersController = async (
   req: Request,
@@ -68,26 +68,32 @@ export const createUserController = async (
     res.status(500).json({ error: "Error while creating a new user" + error });
   }
 };
+
 export const updateUserController = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const id = parseInt(req.params.id); // Assurez-vous de bien récupérer l'ID
-    const updatedUser: UserModel.User = req.body;
+    const id = parseInt(req.params.id);
+    const updatedUser: User = req.body;
+
+    const existingUser = await UserModel.getUserById(id);
+    if (!existingUser) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
 
     const user = await UserModel.updateUser(id, updatedUser);
-    if (user) {
-      res.json(user); // Envoyer l'utilisateur mis à jour
+    if (user !== null) {
+      res.json(user);
     } else {
-      res.status(404).json({ error: "User not found" });
+      res.status(500).json({ error: "Error while updating user" });
     }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error while updating user: " + error });
   }
 };
-
 
 
 export const deleteUserController = async (
@@ -192,26 +198,24 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 //   }
 // };
 
-
-// 
-
+//
 
 const sendEmail = async (toEmail: string): Promise<void> => {
   try {
     const transporter = nodemailer.createTransport({
-      host: 'sandbox.smtp.mailtrap.io',
+      host: "sandbox.smtp.mailtrap.io",
       port: 587,
       secure: false,
       auth: {
-        user: '8886c8805731b6',
-        pass: '3dc30dd939fd85',
+        user: "8886c8805731b6",
+        pass: "3dc30dd939fd85",
       },
     });
 
     const mailOptions = {
-      from: 'teststage877@gmail.com',
+      from: "teststage877@gmail.com",
       to: toEmail,
-      subject: 'Test Email',
+      subject: "Test Email",
       html: `
         <div style="background-color: #f8f9fa; padding: 20px;">
           <h2 style="color: #007bff;">Hello, welcome to the SITE</h2>
@@ -222,13 +226,11 @@ const sendEmail = async (toEmail: string): Promise<void> => {
     };
 
     const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent:', info.response);
+    console.log("Email sent:", info.response);
   } catch (error) {
-    console.error('Error while sending email:', error);
+    console.error("Error while sending email:", error);
   }
 };
-
-
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   const { mail, password, name, niveau_educative, id } = req.body;
@@ -251,29 +253,31 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       id: id,
       name: name,
       niveau_educative: niveau_educative,
-      verified: false
+      verified: false,
     };
 
     const createdUser = await UserModel.createUser(newUser);
 
     // Générez un token de confirmation
     const confirmationToken = jwt.sign({ mail }, SECRET_KEY, {
-      expiresIn: '1d', // Token expires in 1 day
+      expiresIn: "1d", // Token expires in 1 day
     });
- 
 
     // Envoyez un e-mail de confirmation avec le lien
     await sendEmail(mail);
-    res.cookie('confirmationToken', confirmationToken, {
+    res.cookie("confirmationToken", confirmationToken, {
       httpOnly: true, // Empêche JavaScript côté client d'accéder au cookie
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // Expire en 1 jour
     });
 
-    res.status(201).json({ message: "Registration successful. Check your email for a confirmation link." });
+    res
+      .status(201)
+      .json({
+        message:
+          "Registration successful. Check your email for a confirmation link.",
+      });
   } catch (error) {
     console.error("Error while registering:", error);
     res.status(500).json({ message: "Failed to register." });
   }
 };
-
-
