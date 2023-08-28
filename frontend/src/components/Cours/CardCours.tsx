@@ -47,7 +47,7 @@ function CardCours() {
   };
 
   return (
-    <div className="container">
+    <div className="container m-2 p-2 ">
       <Grid container spacing={3}>
         {courses.map((course) => (
           <Grid key={course.id} item xs={12} md={4}>

@@ -22,3 +22,25 @@
 .admin-table .MuiSvgIcon-root {
   font-size: 20px;
 }
+/* Styles pour le dropdown */
+.custom-dropdown {
+  background-color: #292b2c;
+  border: none;
+}
+
+.custom-dropdown a {
+  color: #ffffff;
+}
+
+/* Styles pour les liens */
+.custom-link {
+  color: #ffffff;
+  margin-left: 15px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.custom-link:hover {
+  color: #f8f9fa;
+}
+

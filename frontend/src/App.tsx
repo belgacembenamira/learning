@@ -47,6 +47,9 @@ import ForgetPasswordAdmin from './components/Admin/ForgetPasswordAdmin';
 import LoginAdmin from './components/Admin/handleLoginAdmin';
 import InstructorCourses from './components/Cours/InstructorCourses';
 import PlayerCourse from './components/Cours/PlayerCourse';
+import Footr from './page/Footr';
+import Contact from './page/contact';
+import FAQ from './page/FAQ';
 
 function App() {
   return (
@@ -91,6 +94,8 @@ function App() {
           <Route path="/commande/:id" element={<CommandeUpdateForm />} />
           <Route path="/AllCommande" element={<CommandeList />} />
           <Route path="/commandes-details/:id/" element={<CommandeDetails />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/faq" element={<FAQ />} />
 
           {/* <Route
             path="/player-course/:url"
@@ -111,6 +116,8 @@ function App() {
 
 
         </Routes>
+        <Footr/>
+
       </div>
     </Provider>
   );
