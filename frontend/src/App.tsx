@@ -50,17 +50,33 @@ import PlayerCourse from './components/Cours/PlayerCourse';
 import Footr from './page/Footr';
 import Contact from './page/contact';
 import FAQ from './page/FAQ';
+import withAuth from './components/Admin/withAuth';
+import CourseList from './components/Cours/GetAllCours';
+const ProtectedCourseList = withAuth(CourseList);
+
+
 
 function App() {
+ 
   return (
     <Provider store={store}>
       <div className="App">
         <Navbar />
+        
+        <div className="content">
+        </div>
         <Routes>
           {/* Define your routes */}
           {/* Define a route for the GetAllCours component */}
           <Route path="/" element={<CardCours />} />
-          <Route path="/courses" element={<GetAllCours />} />
+          
+          {/* <Route path="/courses" element={<GetAllCours />} /> */}
+      {/* Use the withAuth HOC to protect the route */}
+      <Route path="/protected-courses" element={<ProtectedCourseList />} />
+
+      {/* <Route path="/courses" element={<GetAllCours />} /> */}
+
+
           {/* Define a route for the UpdateCourse component */}
           <Route path="/edit-course/:id" element={<UpdateCourse />} />
           <Route path="/course-details/:id" element={<CourseDetail />} />

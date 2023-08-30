@@ -213,8 +213,9 @@ export const loginAdminController = async (req:Request, res :Response) => {
       SECRET_KEY,
       { expiresIn: '1h' }
     );
+    // localStorage.setItem('adminToken', token);
 
-    res.status(200).json({ token: token, message: 'Login successful.' });
+    res.status(200).json({ token: token, message: 'Login successful.' + token});
   } catch (error) {
     console.error('Error while logging in:', error);
     res.status(500).json({ message: 'Failed to login.' });

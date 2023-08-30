@@ -65,50 +65,52 @@ function CustomNavbar() {
     const inputValue = formData.get('searchQuery') as string;
     setSearchQuery(inputValue);
   };
+  
 
 
   return (
 
-    <Navbar expand="lg" className="navbar-wrapper bg-primary py-3">
-      <Container>
-        <Navbar.Brand href="/" className="text-light d-flex align-items-center">
-          <img
-            src={require('../assest/logo.png')}
-            alt="Logo"
-            className="logo mr-2"
-            style={{ width: '100px', height: 'auto', marginRight: '10px' }}
-          />
-          <span className="font-weight-bold">My App</span>
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ml-auto text-light d-flex justify-content-between align-items-center w-100">
-            <NavDropdown title="Professeur" id="professorDropdown">
-              <NavDropdown.Item href="/loginProef">Login</NavDropdown.Item>
-              <NavDropdown.Item href="/registerProef">Register</NavDropdown.Item>
-            </NavDropdown>
-            <NavDropdown title="User" id="userDropdown">
-              <NavDropdown.Item href="/login">Login</NavDropdown.Item>
-              <NavDropdown.Item href="/register">Register</NavDropdown.Item>
-            </NavDropdown>
-            <Nav.Link href="/loginAdmin">Admin</Nav.Link>
-            <Nav.Link href="/contact">Contact</Nav.Link>
-            <Nav.Link href="/faq">FAQ</Nav.Link>
-            <Form className="form-inline d-flex" onSubmit={handleSearch}>
-          <FormControl type="text" name="searchQuery" placeholder="Rechercher un cours" className="mr-sm-2" />
-          <Button type="submit" variant="outline-light">
-            <FontAwesomeIcon icon={faSearch} />
-          </Button>
-        </Form>
+    <div>
+      <Navbar expand="lg" className="navbar-wrapper bg-primary py-3">
+        <Container>
+          <Navbar.Brand href="/" className="text-light d-flex align-items-center">
+            <img
+              src={require('../assest/logo.png')}
+              alt="Logo"
+              className="logo mr-2"
+              style={{ width: '100px', height: 'auto', marginRight: '10px' }} />
+            <span className="font-weight-bold">My App</span>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ml-auto text-light d-flex justify-content-between align-items-center w-100">
+              <NavDropdown title="Professeur" id="professorDropdown">
+                <NavDropdown.Item href="/loginProef">Login</NavDropdown.Item>
+                <NavDropdown.Item href="/registerProef">Register</NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown title="User" id="userDropdown">
+                <NavDropdown.Item href="/login">Login</NavDropdown.Item>
+                <NavDropdown.Item href="/register">Register</NavDropdown.Item>
+              </NavDropdown>
+              <Nav.Link href="/loginAdmin">Admin</Nav.Link>
+              <Nav.Link href="/contact">Contact</Nav.Link>
+              <Nav.Link href="/faq">FAQ</Nav.Link>
+              <Form className="form-inline d-flex" onSubmit={handleSearch}>
+                <FormControl type="text" name="searchQuery" placeholder="Rechercher un cours" className="mr-sm-2" />
+                <Button type="submit" variant="outline-light">
+                  <FontAwesomeIcon icon={faSearch} />
+                </Button>
+              </Form>
 
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      <div />
 
-
-
+    </div>
   );
 }
+
 
 export default CustomNavbar;

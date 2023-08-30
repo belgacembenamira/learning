@@ -30,7 +30,12 @@ const LoginAdmin: React.FC = () => {
 
       // If login successful, redirect to dashboard or another page
       // Replace '/dashboard' with your desired destination
-      navigte('/AllCommande');
+      const token = response.data.token;
+
+    // Store the token in local storage
+    localStorage.setItem('authToken', token);
+    console.log(localStorage.getItem('authToken'));
+      navigte('/protected-courses');
     } catch (error) {
       console.error('Error logging in:', error);
     }

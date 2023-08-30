@@ -14,6 +14,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Typography, Grid, TextField, CircularProgress, Container, Button } from '@mui/material';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+
 
 const LoginProef: React.FC = () => {
   const [credentials, setCredentials] = useState({
@@ -58,8 +60,8 @@ const LoginProef: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="xs" style={{ marginTop: '5rem' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Container maxWidth="xs" style={{ marginTop: '5rem' }} className='mb-2'>
+      <div className="login-form">
         <Typography variant="h4" gutterBottom>
           Login
         </Typography>
@@ -74,6 +76,7 @@ const LoginProef: React.FC = () => {
                 onChange={handleInputChange}
                 required
                 variant="outlined"
+                className="input-field"
               />
             </Grid>
             <Grid item xs={12}>
@@ -86,6 +89,7 @@ const LoginProef: React.FC = () => {
                 onChange={handleInputChange}
                 required
                 variant="outlined"
+                className="input-field"
               />
             </Grid>
           </Grid>
@@ -94,11 +98,14 @@ const LoginProef: React.FC = () => {
             variant="contained"
             color="primary"
             disabled={isLoggingIn}
-            style={{ marginTop: '1rem', width: '100%' }}
+            className="login-button"
           >
             {isLoggingIn ? <CircularProgress size={20} /> : 'Login'}
           </Button>
         </form>
+        <p style={{ marginTop: '1rem', textAlign: 'center' }}>
+          Don't have an account? <Link to="/registerProef">Register here</Link>.
+        </p>
       </div>
     </Container>
   );

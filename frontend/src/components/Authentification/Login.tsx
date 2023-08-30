@@ -36,7 +36,8 @@ const Login: React.FC = () => {
   };
 
   return (
-    <MDBContainer fluid>
+    <div className='m-5'>
+      <MDBContainer fluid>
       <MDBCard className='text-black m-5' style={{ borderRadius: '25px' }}>
         <MDBCardBody>
           <MDBRow>
@@ -88,6 +89,7 @@ const Login: React.FC = () => {
         </MDBCardBody>
       </MDBCard>
     </MDBContainer>
+    </div>
   );
 };
 
