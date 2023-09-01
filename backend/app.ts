@@ -12,10 +12,10 @@
  **/
 
 // Import des modules nécessaires
-import * as express from "express"; // Importe le module Express pour gérer les routes et les middleware
-import * as bodyParser from "body-parser"; // Middleware pour analyser les données JSON des requêtes
+import  express from "express"; // Importe le module Express pour gérer les routes et les middleware
+import  bodyParser from "body-parser"; // Middleware pour analyser les données JSON des requêtes
 import router from "./src/Routes/routes"; // Importe les routes définies dans un fichier distinct
-import * as cors from "cors"; // Middleware pour gérer les autorisations CORS (Cross-Origin Resource Sharing)
+import  cors from "cors"; // Middleware pour gérer les autorisations CORS (Cross-Origin Resource Sharing)
 
 // Crée une instance d'application Express
 const app = express();

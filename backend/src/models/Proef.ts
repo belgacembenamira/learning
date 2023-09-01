@@ -62,10 +62,19 @@ export const deleteProef = async (id: number): Promise<number> => {
   return db(TABLE_NAME).where('id', id).delete();
 };
 export const getProefByMail = async (mail: string): Promise<proef | null> => {
-  // const proef = await db(TABLE_NAME).whereRaw('LOWER("mail") = ?', mail.toLowerCase()).first();
-  const proef = await db(TABLE_NAME).whereRaw('LOWER("mail") = ?', mail.toLowerCase()).first();
-  return proef || null;
+  try {
+    const proef = await db(TABLE_NAME)
+      .where('mail', mail.toLowerCase())
+      .first();
+
+    return proef || null;
+  } catch (error) {
+    console.error('Error while fetching proef by mail:', error);
+    throw error; // Rethrow the error to handle it at the caller level
+  }
 };
+
+
 
 
 

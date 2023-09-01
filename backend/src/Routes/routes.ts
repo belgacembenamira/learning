@@ -33,7 +33,7 @@ import {
   
   updateUserController,
 } from "../controllers/UserController";
-import { createProefController, deleteAllProefController, deleteProefController, getAllProefController, getProefByIdController, loginProefController, registerProef, updateProefController } from "../controllers/ProefController";
+import { createProefController, deleteAllProefController, deleteProefController, forgotPasswordController, getAllProefController, getProefByIdController, loginProefController, registerProef, sendResetCodeController, updateProefController } from "../controllers/ProefController";
 import { getAllAdminsController, getAdminByIdController, createAdminController,
   
    updateAdminController, deleteAdminController, registerAdmin, loginAdminController, forgetPassword,
@@ -68,6 +68,8 @@ router.put("/proefs/:id", updateProefController);
 router.delete("/proefs/:id", deleteProefController);
 router.post("/registerProef", registerProef);
 router.post("/loginProef", loginProefController);
+router.post("/send-code", sendResetCodeController);
+router.post("/forget-passwordProef", forgotPasswordController);
 
 /*************************Admin ************ */
 router.get("/admins", getAllAdminsController);

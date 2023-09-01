@@ -27,19 +27,20 @@ const LoginAdmin: React.FC = () => {
         mail: mail,
         password: password,
       });
-
-      // If login successful, redirect to dashboard or another page
-      // Replace '/dashboard' with your desired destination
+  
+    
       const token = response.data.token;
-
-    // Store the token in local storage
-    localStorage.setItem('authToken', token);
-    console.log(localStorage.getItem('authToken'));
-      navigte('/protected-courses');
+  
+      // Store the token in local storage
+      localStorage.setItem('authToken', token);
+      
+      navigte('/protected-courses'); // Correction de la fonction navigate
     } catch (error) {
+      console.log(error);
       console.error('Error logging in:', error);
     }
   };
+  
 
   const handleForgetPassword = () => {
     // Redirect to forget-password page with email as a parameter

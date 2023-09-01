@@ -52,37 +52,46 @@ import Contact from './page/contact';
 import FAQ from './page/FAQ';
 import withAuth from './components/Admin/withAuth';
 import CourseList from './components/Cours/GetAllCours';
-const ProtectedCourseList = withAuth(CourseList);
-
+import AuthGuard from './AuthGuard';
+import jwtDecode from 'jwt-decode';
+import { Index } from './Routes';
+// const ProtectedCourseList = withAuth(CourseList);
 
 
 function App() {
+  const isAuthenticated = true 
+
  
   return (
     <Provider store={store}>
       <div className="App">
         <Navbar />
+        <Index/>
         
-        <div className="content">
-        </div>
+        
         <Routes>
-          {/* Define your routes */}
-          {/* Define a route for the GetAllCours component */}
           <Route path="/" element={<CardCours />} />
-          
-          {/* <Route path="/courses" element={<GetAllCours />} /> */}
-      {/* Use the withAuth HOC to protect the route */}
-      <Route path="/protected-courses" element={<ProtectedCourseList />} />
+          {/* <AuthGuard isAuthenticated={isAuthenticated}>
+          <Route path="/protected-courses" element={<CourseList />} />
+        </AuthGuard> */}
+         {/* <Route
+        path="/protected-courses"
+        element={
+          <AuthGuard isAuthenticated={isAuthenticated}>
+            <index />
+          </AuthGuard>
+        }
+      /> */}
+{/* <Route
+  path=""
+  element={<Index />} 
+/>; */}
 
-      {/* <Route path="/courses" element={<GetAllCours />} /> */}
 
-
-          {/* Define a route for the UpdateCourse component */}
           <Route path="/edit-course/:id" element={<UpdateCourse />} />
           <Route path="/course-details/:id" element={<CourseDetail />} />
           <Route path="/instructor/:instructor" element={<InstructorCourses />} />
 
-          {/* Define a route for the DeleteCourse component */}
           <Route path="/delete-course/:id" element={<DeleteCourse />} />
           <Route path="/create-course" element={<CreateCourse />} />
           <Route path="/login" element={<Login />} />
@@ -96,7 +105,7 @@ function App() {
           <Route path="/RegisterProef" element={<RegisterProef />} />
           <Route path="/loginProef" element={<LoginProef />} />
           { /******************Admin********************************** */}
-          <Route path="/Admin" element={<AdminList />} />
+          {/* <Route path="/Admin" element={<AdminList />} /> */}
           <Route path="/create-admin" element={<CreateAdminForm />} />
           <Route path="/Admin-update/:id" element={<UpdateAdminForm />} />
           <Route path="/Admin-details/:id" element={<AdminDetail />} />
@@ -108,29 +117,10 @@ function App() {
           <Route path="/commande/:coursName" element={<CommandeForm />} />
 
           <Route path="/commande/:id" element={<CommandeUpdateForm />} />
-          <Route path="/AllCommande" element={<CommandeList />} />
+          {/* <Route path="/AllCommande" element={<CommandeList />} /> */}
           <Route path="/commandes-details/:id/" element={<CommandeDetails />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />
-
-          {/* <Route
-            path="/player-course/:url"
-            element={({ params }: { params: { url: string } }) => (
-              <PlayerCourse url={params.url} />
-            )}
-          /> */}
-
-
-
-
-
-
-
-
-
-
-
-
         </Routes>
         <Footr/>
 

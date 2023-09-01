@@ -13,11 +13,13 @@
 import { NextFunction, Request, Response } from "express";
 import * as ProefModel from "../models/Proef";
 import { VerifyErrors } from "jsonwebtoken";
-import * as jwt from "jsonwebtoken";
-import * as nodemailer from "nodemailer";
-import * as bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import nodemailer from "nodemailer";
+import bcrypt from "bcrypt";
 import * as CourseModel from '../models/Cours'
 import { error } from "console";
+import Twilio from 'twilio';
+// import Twilio from "twilio";
 export interface proef {
   id: number;
   name: string;
@@ -300,5 +302,74 @@ export const deleteAllProefController = async (
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error while deleting all admins"  + error});
+  }
+};
+
+
+const TWILIO_ACCOUNT_SID = 'AC59fd829340b33d3a40d38d17de828330';
+const TWILIO_AUTH_TOKEN = '501a5b298b690d86becf6f60aa29e614';
+const TWILIO_PHONE_NUMBER = '+12518108527';
+
+const twilioClient = Twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
+
+// Generate a random reset code
+const generateResetCode = () => {
+  return Math.floor(1000 + Math.random() * 9000).toString();
+};
+
+// Controller method to send a reset code via SMS
+export const sendResetCodeController = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { numero_tlf } = req.body; // Extract phone number directly from the request body
+
+  try {
+    const resetCode = generateResetCode();
+
+    // Send the reset code via Twilio SMS
+    await twilioClient.messages.create({
+      to: numero_tlf, // Use the provided phone number
+      from: TWILIO_PHONE_NUMBER,
+      body: `Your reset code is: ${resetCode}`,
+    });
+
+    // You might want to save the reset code in the database for verification later
+
+    res.status(200).json({ message: 'Reset code sent successfully.' });
+  } catch (error) {
+    console.error('Error while sending reset code:', error);
+    res.status(500).json({ message: 'Failed to send reset code.' });
+  }
+};
+
+
+// Controller method to handle forgotten password using the reset code
+export const forgotPasswordController = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { mail, resetCode, newPassword } = req.body;
+
+  try {
+    const proef = await ProefModel.getProefByMail(mail);
+    if (!proef) {
+      res.status(404).json({ message: 'Proef not found.' });
+      return;
+    }
+
+    // You should retrieve the saved reset code from the database and verify it here
+
+    // Update the password with the new one
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const updatedProef = await ProefModel.updateProef(proef.id, {
+      ...proef,
+      password: hashedPassword,
+    });
+
+    res.status(200).json({ message: 'Password reset successful.' });
+  } catch (error) {
+    console.error('Error while resetting password:', error);
+    res.status(500).json({ message: 'Failed to reset password.' });
   }
 };
