@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^5.2.5",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
@@ -23,6 +24,7 @@
     "@types/react-icons": "^3.0.0",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.26",
+    "antd": "^5.8.5",
     "axios": "^1.4.0",
     "better-react-carousel": "^1.1.2",
     "bootstrap": "^5.3.1",

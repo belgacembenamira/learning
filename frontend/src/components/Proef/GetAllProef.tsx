@@ -91,14 +91,23 @@ const GetAllProef: React.FC = () => {
     setSearchQuery(searchTerm);
   };
 
+  console.log('proefs:', proefs);
+  console.log('searchQuery:', searchQuery);
+  
   const filteredProefs = proefs.filter((proef) => {
+    const query = searchQuery ? searchQuery.toLowerCase() : '';
+  
+    // Ensure that the properties are not null or undefined before calling toLowerCase()
     return (
-      proef.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      proef.matricule.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      proef.mail.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      proef.numero_tlf.toLowerCase().includes(searchQuery.toLowerCase())
+      (proef.name && proef.name.toLowerCase().includes(query)) ||
+      (proef.matricule && proef.matricule.toLowerCase().includes(query)) ||
+      (proef.mail && proef.mail.toLowerCase().includes(query)) ||
+      (proef.numero_tlf && proef.numero_tlf.toLowerCase().includes(query))
     );
   });
+  
+  
+  
   return (
 
     <div>
