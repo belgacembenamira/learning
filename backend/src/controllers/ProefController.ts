@@ -306,9 +306,9 @@ export const deleteAllProefController = async (
 };
 
 
-const TWILIO_ACCOUNT_SID = 'AC59fd829340b33d3a40d38d17de828330';
-const TWILIO_AUTH_TOKEN = '501a5b298b690d86becf6f60aa29e614';
-const TWILIO_PHONE_NUMBER = '+12518108527';
+const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
+const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
+const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER;;
 
 const twilioClient = Twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 

@@ -2,11 +2,11 @@
     * @description      : 
     * @author           : belgacem
     * @group            : 
-    * @created          : 28/08/2023 - 12:05:51
+    * @created          : 18/09/2023 - 23:49:07
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 28/08/2023
+    * - Date            : 18/09/2023
     * - Author          : belgacem
     * - Modification    : 
 **/
@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
+// Define the Course interface with proper types
 interface Course {
   id: number;
   name: string;
@@ -24,16 +25,25 @@ interface Course {
   availability: string;
   instructor: string;
   category: string;
+  duration: string;
+  difficulty: string | null;
+  prerequisites: string | null;
+  learning_objectives: string | null;
+  materials: string | null;
+  evaluation_method: string | null;
+  certificates: string | null;
+  interactive: string | null;
+  language: string | null;
+  image_url: string;
+  lien_courses: string;
 }
 
 function CustomNavbar() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
 
   useEffect(() => {
     // Fetch courses when component mounts
-    console.log('hello²')
     const fetchCourses = async () => {
       try {
         const response = await axios.get('http://localhost:5000/courses/');
@@ -45,40 +55,24 @@ function CustomNavbar() {
     fetchCourses();
   }, []);
 
-  useEffect(() => {
-    console.log('hellokkkkkkkkkkkkk')
-
-    try {
-      // Filter courses based on searchQuery whenever it changes
-      const filteredResults = courses.filter((course: Course) =>
-        course.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      setFilteredCourses(filteredResults);
-    } catch (error) {
-      console.error('Error filtering courses:', error);
-    }
-  }, [searchQuery, courses]);
-
   const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const inputValue = formData.get('searchQuery') as string;
     setSearchQuery(inputValue);
   };
-  
-
 
   return (
-
     <div>
       <Navbar expand="lg" className="navbar-wrapper bg-primary py-3">
         <Container>
           <Navbar.Brand href="/" className="text-light d-flex align-items-center">
             <img
-              src={require('../assest/logo.png')}
+              src={require('../assest/logo.png')} // Correct the image path
               alt="Logo"
               className="logo mr-2"
-              style={{ width: '100px', height: 'auto', marginRight: '10px' }} />
+              style={{ width: '100px', height: 'auto', marginRight: '10px' }}
+            />
             <span className="font-weight-bold">My App</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -95,22 +89,25 @@ function CustomNavbar() {
               <Nav.Link href="/loginAdmin">Admin</Nav.Link>
               <Nav.Link href="/contact">Contact</Nav.Link>
               <Nav.Link href="/faq">FAQ</Nav.Link>
-              <Form className="form-inline d-flex" onSubmit={handleSearch}>
-                <FormControl type="text" name="searchQuery" placeholder="Rechercher un cours" className="mr-sm-2" />
+              <Form onSubmit={handleSearch}>
+                <FormControl
+                  type="search"
+                  placeholder="Search for courses"
+                  className="mr-sm-2"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
                 <Button type="submit" variant="outline-light">
                   <FontAwesomeIcon icon={faSearch} />
                 </Button>
               </Form>
-
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
       <div />
-
     </div>
   );
 }
-
 
 export default CustomNavbar;

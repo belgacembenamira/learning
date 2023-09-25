@@ -89,3 +89,16 @@
 }
 
 /* Personnalisez d'autres styles selon vos besoins */
+.navbar-wrapper {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.navbar-brand {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+}
+
+.nav-link {
+  font-family: 'Roboto', sans-serif;
+}

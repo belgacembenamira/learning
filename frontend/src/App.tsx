@@ -71,22 +71,7 @@ function App() {
         
         <Routes>
           <Route path="/" element={<CardCours />} />
-          {/* <AuthGuard isAuthenticated={isAuthenticated}>
-          <Route path="/protected-courses" element={<CourseList />} />
-        </AuthGuard> */}
-         {/* <Route
-        path="/protected-courses"
-        element={
-          <AuthGuard isAuthenticated={isAuthenticated}>
-            <index />
-          </AuthGuard>
-        }
-      /> */}
-{/* <Route
-  path=""
-  element={<Index />} 
-/>; */}
-
+          
 
           <Route path="/edit-course/:id" element={<UpdateCourse />} />
           <Route path="/course-details/:id" element={<CourseDetail />} />
